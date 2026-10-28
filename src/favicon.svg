@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#0B0C0E"/>
+<rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
+<line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="20.0" y1="53.0" x2="20.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="20.0" x2="11.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="20.0" x2="61.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="3.0" x2="28.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="53.0" x2="28.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="28.0" x2="11.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="28.0" x2="61.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="3.0" x2="36.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="53.0" x2="36.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="36.0" x2="11.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="36.0" x2="61.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="3.0" x2="44.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="53.0" x2="44.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="44.0" x2="11.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="44.0" x2="61.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<polygon points="43.55,36.78 36.78,43.55 27.22,43.55 20.45,36.78 20.45,27.22 27.22,20.45 36.78,20.45 43.55,27.22" fill="#FF5B35"/>
+</svg>

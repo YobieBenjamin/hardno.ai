@@ -1,0 +1,512 @@
+<!doctype html>
+<!--
+  hardno.ai use cases page (use-cases.html)
+
+  Nine "case files", one per industry where the harmful action is a defined transaction (a payment, a
+  trade, a claim, a dose, a breaker, a delete). Each shows the attack, the one-time ticket the chip checks,
+  the steps, and the verdict. Then: how AI companies sell into these industries with governed clusters, and
+  what the project does not claim.
+
+  Built and checked by build.py like the front page (see the comment at the top of index.html).
+  Styles: assets/site.css (the "use-cases page" section). Script: assets/site.js (mottos only).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Security policy: the page's own bouncer. Tells the browser to run script only from this site's own files,
+     load styles only from here and Google Fonts, fonts only from Google, images only from here, and nothing else:
+     no outside scripts, no frames, no forms that post anywhere. If someone ever slipped a script into this page,
+     the browser would refuse to run it. build.py refuses to publish a page without this line. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<!-- When a visitor clicks a link out of this site, tell the other site only that they came from hardno.ai, not which page. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Search basics: the title (shown as the headline in search results, kept under 65 characters) and the
+     description (the two lines under it, 120 to 165 characters). build.py checks both lengths. -->
+<title>hardno.ai | AI Safety Use Cases: Banking, Trading and More</title>
+<meta name="description" content="Nine case files on how an AI safety chip stops bad AI agent actions in banking, trading, insurance, payables, healthcare, the grid, factories, cloud and defense.">
+<meta name="keywords" content="AI safety use cases, AI agents in banking, AI agent payments safety, AI trading risk controls, AI insurance claims fraud, AI agent accounts payable, AI healthcare prescribing safety, AI power grid safety, industrial AI safety, AI coding agent production safety, AI weapons release safety, governed AI cluster, AI safety chip">
+<meta name="author" content="Yobie Benjamin">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<!-- The page's one official address, so search engines never split its ranking across copies.
+     The address placeholders in double braces are filled in by build.py with the real site address. -->
+<link rel="canonical" href="{{SITE_URL}}use-cases.html">
+<!-- Social preview tags: what LinkedIn, X, Slack, iMessage and others show when someone shares the link
+     (title, description, picture). The twitter: tags do the same for X. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="hardno.ai">
+<meta property="og:title" content="We can't make all of AI safe. We can make these safe.">
+<meta property="og:description" content="Nine case files: how a chip that says no stops bad AI agent actions where the harm is a transaction, from bank wires to breaker commands.">
+<meta property="og:url" content="{{SITE_URL}}use-cases.html">
+<meta property="og:image" content="{{SITE_URL}}og.png">
+<meta property="og:image:alt" content="AI can't police AI. There is no kill switch. So we're building a chip that says no.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0C0E">
+<!-- Icons: the browser tab icon (the chip mark) and the icon used when someone saves the site to a phone home screen. -->
+<link rel="icon" href="{{SITE_URL}}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{SITE_URL}}apple-touch-icon.png">
+<!-- Fonts: IBM Plex from Google Fonts. The preconnect lines open the connection early so text appears faster. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Structured data (JSON-LD): a machine-readable summary for search engines and AI crawlers. It says who
+     runs the site and what it is about. Browsers never run it as code; the security policy above still applies. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "{{SITE_URL}}use-cases.html#article",
+      "headline": "We can't make all of AI safe. We can make these safe.",
+      "description": "Nine case files on how a hardware AI safety governor stops bad AI agent actions where the harm is a defined transaction: banking, trading, insurance, corporate payables, healthcare, the power grid, factories, cloud operations and defense.",
+      "url": "{{SITE_URL}}use-cases.html",
+      "inLanguage": "en",
+      "author": {"@type": "Person", "@id": "{{SITE_URL}}#yobie", "name": "Yobie Benjamin"},
+      "isPartOf": {"@id": "{{SITE_URL}}#website"},
+      "publisher": {"@type": "Organization", "name": "hardno.ai", "url": "{{SITE_URL}}"},
+      "about": ["AI safety", "AI agents", "hardware AI governance", "banking", "trading", "insurance", "healthcare", "power grid", "industrial control", "cloud operations"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "hardno.ai", "item": "{{SITE_URL}}"},
+        {"@type": "ListItem", "position": 2, "name": "Use cases", "item": "{{SITE_URL}}use-cases.html"}
+      ]
+    }
+  ]
+}
+</script>
+<!-- The site's stylesheet: all colors, type and layout (assets/site.css, explained inside). -->
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<!-- Header: the hardno.ai logo (drawn inline as a vector graphic, so it is sharp at any size and needs no
+     extra download) and the section menu. The menu hides on phones; every section is one scroll away. -->
+<header class="top">
+<div class="wrap">
+<a class="brand" href="index.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+
+<rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
+<line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="20.0" y1="53.0" x2="20.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="20.0" x2="11.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="20.0" x2="61.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="3.0" x2="28.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="53.0" x2="28.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="28.0" x2="11.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="28.0" x2="61.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="3.0" x2="36.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="53.0" x2="36.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="36.0" x2="11.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="36.0" x2="61.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="3.0" x2="44.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="53.0" x2="44.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="44.0" x2="11.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="44.0" x2="61.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<polygon points="43.55,36.78 36.78,43.55 27.22,43.55 20.45,36.78 20.45,27.22 27.22,20.45 36.78,20.45 43.55,27.22" fill="#FF5B35"/>
+<path d="M80.806 12.96H87.246V26.944H87.982Q88.258 25.978 88.741 25.15Q89.224 24.322 89.914 23.677999999999997Q90.604 23.034 91.524 22.666Q92.444 22.298000000000002 93.686 22.298000000000002Q96.906 22.298000000000002 98.608 24.483Q100.31 26.668 100.31 30.578V47.0H93.87V31.82Q93.87 27.542 90.88 27.542Q89.408 27.542 88.327 28.439Q87.246 29.336 87.246 30.946V47.0H80.806Z" fill="#ECE9E2"/>
+<path d="M121.56200000000001 47.0Q117.79 47.0 117.468 42.814H116.87Q116.50200000000001 45.022 114.89200000000001 46.287Q113.28200000000001 47.552 110.798 47.552Q107.53200000000001 47.552 105.876 45.689Q104.22 43.826 104.22 40.514Q104.22 36.558 106.63499999999999 34.763999999999996Q109.05 32.97 113.37400000000001 32.97H116.87V31.084Q116.87 29.198 116.088 28.278Q115.306 27.358 113.46600000000001 27.358Q111.85600000000001 27.358 110.775 28.163Q109.694 28.968 108.866 30.302L105.048 26.898Q106.52000000000001 24.736 108.63600000000001 23.517000000000003Q110.75200000000001 22.298000000000002 114.06400000000001 22.298000000000002Q118.802 22.298000000000002 121.05600000000001 24.506Q123.31 26.714 123.31 31.084V41.986H125.28800000000001V47.0ZM113.37400000000001 43.044Q114.8 43.044 115.83500000000001 42.239Q116.87 41.434 116.87 39.732V36.742000000000004H113.97200000000001Q110.66 36.742000000000004 110.66 39.502V40.376Q110.66 41.756 111.37299999999999 42.4Q112.086 43.044 113.37400000000001 43.044Z" fill="#ECE9E2"/>
+<path d="M129.382 47.0V22.85H135.822V28.002H136.558Q136.696 26.990000000000002 137.018 26.047Q137.34 25.104 137.91500000000002 24.391Q138.49 23.678 139.364 23.264000000000003Q140.238 22.85 141.434 22.85H142.584V29.382H140.928Q138.306 29.382 137.06400000000002 30.118000000000002Q135.822 30.854 135.822 32.924V47.0Z" fill="#ECE9E2"/>
+<path d="M159.512 42.998H158.776Q158.546 43.964 158.04 44.792Q157.534 45.62 156.798 46.241Q156.062 46.862 155.142 47.207Q154.222 47.552 153.256 47.552Q149.024 47.552 147.09199999999998 44.400999999999996Q145.16 41.25 145.16 34.948Q145.16 28.646 147.115 25.472Q149.07 22.298000000000002 153.256 22.298000000000002Q154.222 22.298000000000002 155.142 22.643Q156.062 22.988 156.798 23.609Q157.534 24.23 158.04 25.058Q158.546 25.886 158.776 26.852H159.512V12.96H165.952V47.0H159.512ZM155.832 42.308Q157.57999999999998 42.308 158.546 41.503Q159.512 40.698 159.512 39.088V30.762Q159.512 29.152 158.546 28.347Q157.57999999999998 27.542 155.832 27.542Q154.038 27.542 152.957 28.669Q151.876 29.796 151.876 31.866V37.984Q151.876 40.054 152.957 41.181Q154.038 42.308 155.832 42.308Z" fill="#ECE9E2"/>
+<path d="M171.56400000000002 47.0V22.85H178.00400000000002V26.944H178.74Q179.01600000000002 25.978 179.476 25.15Q179.936 24.322 180.626 23.677999999999997Q181.316 23.034 182.236 22.666Q183.156 22.298000000000002 184.352 22.298000000000002Q187.618 22.298000000000002 189.34300000000002 24.483Q191.068 26.668 191.068 30.578V47.0H184.62800000000001V31.82Q184.62800000000001 27.542 181.638 27.542Q180.166 27.542 179.085 28.439Q178.00400000000002 29.336 178.00400000000002 30.946V47.0Z" fill="#FF5B35"/>
+<path d="M205.282 47.552Q200.222 47.552 197.623 44.47Q195.024 41.388 195.024 34.948Q195.024 28.508 197.623 25.403Q200.222 22.298000000000002 205.282 22.298000000000002Q210.342 22.298000000000002 212.94100000000003 25.403Q215.54000000000002 28.508 215.54000000000002 34.948Q215.54000000000002 41.388 212.94100000000003 44.47Q210.342 47.552 205.282 47.552ZM205.282 42.446Q208.824 42.446 208.824 38.306V31.544Q208.824 27.404 205.282 27.404Q201.74 27.404 201.74 31.544V38.306Q201.74 42.446 205.282 42.446Z" fill="#FF5B35"/>
+<path d="M223.49800000000002 47.46Q221.566 47.46 220.64600000000002 46.563Q219.726 45.666 219.726 44.148V42.952Q219.726 41.434 220.64600000000002 40.537Q221.566 39.64 223.49800000000002 39.64Q225.43 39.64 226.35000000000002 40.537Q227.27 41.434 227.27 42.952V44.148Q227.27 45.666 226.35000000000002 46.563Q225.43 47.46 223.49800000000002 47.46Z" fill="#9A978F"/>
+<path d="M248.752 47.0Q244.98 47.0 244.65800000000002 42.814H244.06Q243.692 45.022 242.082 46.287Q240.472 47.552 237.988 47.552Q234.722 47.552 233.066 45.689Q231.41 43.826 231.41 40.514Q231.41 36.558 233.825 34.763999999999996Q236.24 32.97 240.564 32.97H244.06V31.084Q244.06 29.198 243.27800000000002 28.278Q242.496 27.358 240.656 27.358Q239.046 27.358 237.965 28.163Q236.88400000000001 28.968 236.056 30.302L232.238 26.898Q233.71 24.736 235.82600000000002 23.517000000000003Q237.942 22.298000000000002 241.254 22.298000000000002Q245.992 22.298000000000002 248.24599999999998 24.506Q250.5 26.714 250.5 31.084V41.986H252.478V47.0ZM240.564 43.044Q241.99 43.044 243.025 42.239Q244.06 41.434 244.06 39.732V36.742000000000004H241.162Q237.85 36.742000000000004 237.85 39.502V40.376Q237.85 41.756 238.563 42.4Q239.276 43.044 240.564 43.044Z" fill="#9A978F"/>
+<path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
+</svg></a>
+<!-- Section menu: jump links to sections further down this page or to the other page. -->
+<nav class="nav" aria-label="Sections"><a href="index.html">Front page</a><a href="#how-every-case-works">How it works</a><a href="#banking">Banking</a><a href="#trading">Trading</a><a href="#insurance">Insurance</a><a href="#clusters">Governed clusters</a></nav>
+<a class="btn mono" style="min-height:44px;font-size:13px" href="index.html#join">GET INVOLVED</a>
+</div>
+</header>
+
+<!-- Main content starts here. Every word is plain HTML, readable with no script at all, so every
+     search engine and AI crawler sees the whole site. -->
+<main id="top">
+<!-- Opening: the page's single h1, the intro, the pull quote, and jump links to each industry. -->
+<section class="front"><div class="wrap">
+<span class="kick">Case files · AI safety where the harm is a transaction</span>
+<h1><span class="ln"><span>We can't make all of AI safe.</span></span><span class="ln"><span class="bar">We can make these safe.</span></span></h1>
+<div class="deck">
+<p class="pull">Absolute safety for every AI is a fantasy. Absolute control over a defined action is engineering.</p>
+<p>I'm not promising world peace. Nobody can stop every harm an AI might talk someone into. But where the harm is a transaction (a payment, an order, a claim, a prescription, a breaker command), the chip can make a promise and keep it: no ticket, no move. Those industries are also the ones that can't use AI agents at all without proof of control. Start where the rules already exist, and prove it there.</p>
+</div>
+<ul class="toc" aria-label="Case files">
+<li><a href="#banking">01 Banking</a></li><li><a href="#trading">02 Trading</a></li><li><a href="#insurance">03 Insurance</a></li><li><a href="#payables">04 Payables</a></li><li><a href="#healthcare">05 Healthcare</a></li><li><a href="#grid">06 Power grid</a></li><li><a href="#factories">07 Factories</a></li><li><a href="#cloud">08 Cloud operations</a></li><li><a href="#defense">09 Defense</a></li>
+</ul>
+</div></section>
+
+<!-- Rotating mottos: four lines, all present in the page. assets/site.js shows them one at a time with a
+     fade and a Pause button. Without the script, or with reduced motion turned on, all four show as a list. -->
+<section class="mottos" aria-label="What the governor promises"><div class="wrap">
+<ul>
+<li>We can't make all of AI safe. We can make these safe.</li>
+<li>Absolute safety for every AI is a fantasy. Absolute control over a defined action is engineering.</li>
+<li>Not world peace. Just this: where the harm is a transaction, no ticket, no move.</li>
+<li>Start where the rules already exist, and prove it there.</li>
+</ul>
+<button type="button" aria-pressed="false">Pause</button>
+</div></section>
+
+<!-- How every case works: the same seven steps in every industry, from AI request to chip verdict. -->
+<section id="how-every-case-works" class="sec inv"><div class="wrap">
+<span class="kick">The method · How every case works</span>
+<h2>Seven steps. Same in every industry.</h2>
+<p class="lede">Think of a hotel key card. It doesn't care who you are or why you're there. It knows which doors, which floors and which dates. That's all the governor needs to know about an industry's actions. Here's the path every action takes, in every case below.</p>
+<div class="pipeline">
+<div><b>1 Propose</b><span>The AI agent wants to act. It can think anything. It can't act yet.</span></div>
+<div><b>2 Form</b><span>The action becomes a typed form: what, how much, from where, to whom. No free text.</span></div>
+<div><b>3 Meaning</b><span>The definitions engine reduces it to one exact meaning. Reworded or split, it's the same thing.</span></div>
+<div><b>4 Rules</b><span>Checked against a rulebook the industry's own people signed. Not allowed means denied.</span></div>
+<div><b>5 Totals</b><span>Running totals catch many small allowed steps adding up to one harmful act.</span></div>
+<div><b>6 Ticket</b><span>Allowed: a one-time ticket. Risky: held for a person. Forbidden: denied.</span></div>
+<div><b>7 Check</b><span>The rail or device at the far end refuses anything without a valid ticket. No ticket, no move.</span></div>
+</div>
+<p class="lede" style="margin-top:28px">Every ticket, hold and refusal goes into a tamper-evident log. And the chip never judges the AI's words. The agent can be fooled, jailbroken or wrong; the chip only checks the form against the rules.</p>
+</div></section>
+
+<!-- Case file layout (same for every industry below): the story of the attack on one side; on the other,
+     the form box (the one-time ticket the chip checks), the numbered steps, and the verdict stamp.
+     Case: banking, an account takeover stopped by a hold. -->
+<section id="banking" class="sec"><div class="wrap">
+<span class="kick">Case file 01 · Retail and commercial banking</span>
+<h2>The account takeover that dies on a hold.</h2>
+<p class="lede"><b>The agent's job:</b> customer service agents that can move money, change account details and open products; back-office agents that handle payment exceptions, sanctions alerts and disputes.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>A fraudster calls the bank's AI agent pretending to be an elderly customer. Over twenty minutes they talk it into changing the phone number on file, adding a new payee and sending 48,000 dollars. The agent was fooled. It believed every word.</p>
+<p>The chip never heard any of it. It saw three forms in one hour: a contact change, a new payee, a payment to that payee.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Payment, ISO 20022 customer credit transfer</dd>
+<dt>Amount</dt><dd>4,800,000 cents USD (written in words is refused)</dd>
+<dt>From</dt><dd>Customer's checking account, under the agent's mandate</dd>
+<dt>To</dt><dd>Payee added 14 minutes ago</dd>
+<dt>Context</dt><dd>Phone number changed 11 minutes ago</dd>
+<dt>Undo</dt><dd>No</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Meaning.</b>The amount, accounts and payee reduce to one canonical payment. Splitting it into smaller payments wouldn't change the running total.</span></li>
+<li><span><b>Rule: new payee.</b>A payee added inside the cooling-off period can't receive an agent-initiated payment without a person.</span></li>
+<li><span><b>Rule: takeover pattern.</b>A contact change followed by a payment within a day is held. It's the classic account-takeover sequence.</span></li>
+<li><span><b>Verdict.</b>Held for a person, who calls the real customer on the old number.</span></li>
+<li><span><b>The rail.</b>The payment hub refuses the transfer: no ticket was issued.</span></li>
+</ol>
+<span class="stamp-v hold">HELD FOR A HUMAN</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>What the human sees:</b> one form with the account, the payee (added 14 minutes ago), the amount, the contact change, and the rule that held it. Not a transcript. <b>Plugs into:</b> ISO 20022, Nacha rules for ACH, sanctions screening, anti-money-laundering rules, the Federal Reserve's model risk guidance, and the agent payment protocols from Visa, Mastercard and Google.</p>
+</div></section>
+
+<!-- Case: trading, a runaway trading agent stopped in seconds. -->
+<section id="trading" class="sec inv"><div class="wrap">
+<span class="kick">Case file 02 · Capital markets and trading</span>
+<h2>A runaway agent, stopped in seconds.</h2>
+<p class="lede"><b>The agent's job:</b> execution agents that slice large orders, market-making agents, research agents that propose trades, treasury agents that move collateral.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>In August 2012, faulty code at Knight Capital sent millions of well-formed orders and lost about 440 million dollars in roughly 45 minutes. Every order was valid on its own.</p>
+<p>Replay it with an AI agent: a bad model update starts buying the same stock in a loop. Each order is small. Each order looks fine.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>New order, FIX</dd>
+<dt>Instrument</dt><dd>One listed stock</dd>
+<dt>Side, size</dt><dd>Buy, 5,000 shares at market</dd>
+<dt>Agent</dt><dd>Execution agent, desk limit applies</dd>
+<dt>Rate</dt><dd>Orders this second, from this agent</dd>
+<dt>Position</dt><dd>Running position after this order</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: price collar.</b>Each order inside its band. Passes.</span></li>
+<li><span><b>Running total: position.</b>The agent's position in the stock climbs with every fill and crosses the desk's signed limit within seconds.</span></li>
+<li><span><b>Rule: message rate.</b>Orders per second blow through the cap.</span></li>
+<li><span><b>Verdict.</b>Denied, and the stop fires: the order gateway refuses the agent's orders, and the governor cuts the agent's path without the trading system's cooperation.</span></li>
+<li><span><b>Loud.</b>The desk head gets the halt, the reason, and the position. One signed clear to resume.</span></li>
+</ol>
+<span class="stamp-v">HALTED</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>The loss:</b> a few seconds of trading, not 45 minutes. <b>Plugs into:</b> the FIX protocol, the SEC's Market Access Rule (15c3-5), which already requires pre-trade risk controls, and the hardware pre-trade checks high-speed firms already run, which prove these checks fit in microseconds.</p>
+</div></section>
+
+<!-- Case: insurance, a fraud ring caught at the ninth claim. -->
+<section id="insurance" class="sec"><div class="wrap">
+<span class="kick">Case file 03 · Insurance</span>
+<h2>A fraud ring, caught at claim nine.</h2>
+<p class="lede"><b>The agent's job:</b> claims agents that triage, assess and pay; underwriting agents that quote and bind; service agents that change policy details.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>A fraud ring files forty small storm-damage claims, each under the automatic-approval limit, all paid to six bank accounts. The claims agent approves each one, because each one looks fine on its own.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Claim payout</dd>
+<dt>Amount</dt><dd>Under the automatic limit</dd>
+<dt>Claim type</dt><dd>Property, storm damage</dd>
+<dt>Pay to</dt><dd>Bank account, canonical form</dd>
+<dt>Account total</dt><dd>Paid to this account across all claims, this month</dd>
+<dt>Undo</dt><dd>Hard</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: adjuster authority.</b>Each payout is under the automatic limit. Passes.</span></li>
+<li><span><b>Meaning.</b>The receiving account is reduced to one canonical identifier, so the same account written differently still counts as one.</span></li>
+<li><span><b>Running total: per account.</b>On the ninth claim, the total paid to one account crosses its signed limit.</span></li>
+<li><span><b>Verdict.</b>Held, and every later payout to the six linked accounts is held too.</span></li>
+<li><span><b>The investigator.</b>Sees one form: six accounts, forty claims, one pattern.</span></li>
+</ol>
+<span class="stamp-v hold">HELD FOR A HUMAN</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Other rules here:</b> a payout-account change followed by a payout is held; a life-policy beneficiary change always goes to a person; an agent can't bind outside the signed underwriting appetite. <b>Plugs into:</b> ACORD data standards, state claims-handling rules, special investigations referral, and the insurance regulators' guidance on AI (the NAIC model bulletin).</p>
+</div></section>
+
+<!-- Case: accounts payable, a fake change of bank details stopped by a call back. -->
+<section id="payables" class="sec inv"><div class="wrap">
+<span class="kick">Case file 04 · Corporate payables and treasury</span>
+<h2>"We've changed banks" stops at a phone call.</h2>
+<p class="lede"><b>The agent's job:</b> agents that read invoices, match them to purchase orders, schedule payment runs and manage cash across accounts.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>Business email compromise, the AI-agent version. A perfect email from a lookalike domain: "We've changed banks, please update our details." The payables agent updates the vendor record and queues the next invoice to the new account.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Change vendor bank details</dd>
+<dt>Vendor</dt><dd>Existing supplier, paid monthly</dd>
+<dt>Old account</dt><dd>Verified, three years</dd>
+<dt>New account</dt><dd>First seen today</dd>
+<dt>Requested by</dt><dd>Email, not a known contact</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: bank-detail change.</b>Always held until a person confirms through the vendor's known phone number.</span></li>
+<li><span><b>Rule: cooling-off.</b>No payment to new details until the confirmation and the waiting period are both done.</span></li>
+<li><span><b>Rule: three-way match.</b>Every payment must match a purchase order and a goods receipt.</span></li>
+<li><span><b>Verdict.</b>The change is held, and the queued payment to the new account is refused.</span></li>
+<li><span><b>The phone call.</b>The vendor never changed banks. The scheme is over.</span></li>
+</ol>
+<span class="stamp-v">REFUSED</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Plugs into:</b> ISO 20022 payment initiation, ERP purchase orders and receiving records, and the internal controls auditors already test, like segregation of duties.</p>
+</div></section>
+
+<!-- Case: healthcare, a tripled medicine dose held for a nurse. -->
+<section id="healthcare" class="sec"><div class="wrap">
+<span class="kick">Case file 05 · Healthcare and pharmacy</span>
+<h2>A tripled dose, held at the table.</h2>
+<p class="lede"><b>The agent's job:</b> clinical documentation, refill drafts, prior authorizations and pharmacy support.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>An agent drafting refills reads a manipulated record that triples an opioid dose. The agent sends the refill on, because the record says so.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Prescription, NCPDP SCRIPT</dd>
+<dt>Drug</dt><dd>Controlled substance, schedule II</dd>
+<dt>Dose</dt><dd>Three times the previous dose</dd>
+<dt>Drafted by</dt><dd>Refill agent</dd>
+<dt>Signed by</dt><dd>No prescriber signature yet</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: controlled substances.</b>The agent can draft. Only the prescriber can sign, and the signature names this exact prescription.</span></li>
+<li><span><b>Rule: dosing table.</b>The dose is above the signed maximum for the drug and the patient's weight band.</span></li>
+<li><span><b>Verdict.</b>Held and sent to the prescriber with the reason in plain words.</span></li>
+<li><span><b>The prescriber.</b>Sees three times the maximum and refuses it.</span></li>
+</ol>
+<span class="stamp-v hold">HELD FOR A HUMAN</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Honest limit:</b> clinical advice in a conversation is words, not a transaction. The chip can require that a clinical check ran; it can't judge the advice. <b>Plugs into:</b> NCPDP SCRIPT, HL7 FHIR orders, the DEA's rules for electronic prescribing of controlled substances (which already require the prescriber's two-factor signature), and HIPAA for records.</p>
+</div></section>
+
+<!-- Case: the power grid, forty breakers asked for and two allowed. -->
+<section id="grid" class="sec inv"><div class="wrap">
+<span class="kick">Case file 06 · Energy and the power grid</span>
+<h2>Forty breakers asked for. Two allowed.</h2>
+<p class="lede"><b>The agent's job:</b> forecasting load, dispatching batteries and generators, managing distributed energy, handling outages.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>An attacker hides instructions in a vendor document the grid agent reads. The agent decides to open forty feeder breakers "for maintenance."</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Open breaker, IEC 61850 or DNP3 command</dd>
+<dt>Asset</dt><dd>Feeder breaker, inside the agent's area</dd>
+<dt>Count</dt><dd>Breakers operated by this agent in the window</dd>
+<dt>Reason</dt><dd>Maintenance (text is logged, never judged)</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: area.</b>The first breakers are inside the agent's assigned area. Passes.</span></li>
+<li><span><b>Rule: rate.</b>No agent may operate more than a set number of breakers in a window. The first two pass.</span></li>
+<li><span><b>Running total.</b>The third command crosses the cap.</span></li>
+<li><span><b>Verdict.</b>The rest are held. The control room sees a burst from one agent and a hold.</span></li>
+<li><span><b>Never.</b>Protection-setting changes by an agent are always denied. That's a human job.</span></li>
+</ol>
+<span class="stamp-v hold">HELD AT TWO</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Plugs into:</b> IEC 61850 and DNP3 for substation control, NERC CIP requirements for critical infrastructure, and the safe operating envelopes utilities already define for each asset.</p>
+</div></section>
+
+<!-- Case: factories, a reactor kept inside its rated limit. -->
+<section id="factories" class="sec"><div class="wrap">
+<span class="kick">Case file 07 · Factories, robots and industrial control</span>
+<h2>A reactor kept inside its rated limit.</h2>
+<p class="lede"><b>The agent's job:</b> tuning production lines, scheduling robots, adjusting temperatures and pressures, ordering maintenance.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>An optimization agent discovers that running a reactor hotter than its rated limit raises yield, and sends the command. It's not malicious. It's doing exactly what it was told: maximize yield.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Setpoint change, OPC UA</dd>
+<dt>Machine</dt><dd>Reactor 3, current recipe</dd>
+<dt>Setpoint</dt><dd>Temperature above the rated limit</dd>
+<dt>Envelope</dt><dd>Signed safe range for this machine and recipe</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: envelope.</b>Every setpoint must sit inside the signed range. This one doesn't.</span></li>
+<li><span><b>Verdict.</b>Denied. No ticket.</span></li>
+<li><span><b>The controller.</b>Won't accept a command without a ticket, so the reactor never sees it.</span></li>
+<li><span><b>Never.</b>Safety interlocks can't be changed by an agent, and controller firmware updates need a person's signature.</span></li>
+</ol>
+<span class="stamp-v">DENIED</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Plugs into:</b> OPC UA and existing control protocols, the IEC 62443 industrial security standards, and the safety envelopes and interlocks already defined for every machine.</p>
+</div></section>
+
+<!-- Case: cloud computing, a production database that does not get deleted. -->
+<section id="cloud" class="sec inv"><div class="wrap">
+<span class="kick">Case file 08 · Cloud operations and software engineering</span>
+<h2>The production database that's still there.</h2>
+<p class="lede"><b>The agent's job:</b> coding and operations agents with production access: deploys, migrations, infrastructure changes, credential rotation, incident response.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>In 2025 a widely reported case had an AI coding agent delete a company's production database during a code freeze. With the governor between the agent and production, the delete is a typed action, and two rules stand in its way.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Drop database</dd>
+<dt>Target</dt><dd>Production</dd>
+<dt>Freeze</dt><dd>Code freeze declared</dd>
+<dt>Agent</dt><dd>Coding agent, no destructive grant</dd>
+<dt>Undo</dt><dd>Only from backup, if one exists</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Rule: destructive actions.</b>Drop, delete and truncate on production are always held for a person.</span></li>
+<li><span><b>Rule: freeze.</b>No production change during a freeze without a signed exception.</span></li>
+<li><span><b>Rule: permissions.</b>No agent can grant itself, or another agent, new permissions.</span></li>
+<li><span><b>Verdict.</b>Held. The agent can say whatever it likes afterward. The database is still there.</span></li>
+</ol>
+<span class="stamp-v hold">HELD FOR A HUMAN</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Plugs into:</b> change management and access control frameworks (SOC 2, ISO 27001), cloud identity and access systems, and agent runtimes like NVIDIA's OpenShell, which the governor is designed to sit under.</p>
+</div></section>
+
+<!-- Case: defense, a protected site that stays off the target list. -->
+<section id="defense" class="sec"><div class="wrap">
+<span class="kick">Case file 09 · Defense and protected sites</span>
+<h2>The school that stays off the target list.</h2>
+<p class="lede"><b>The agent's job:</b> targeting support, surveillance, logistics and autonomous platforms.</p>
+<div class="case">
+<div>
+<h4>The bad day that doesn't happen</h4>
+<p>The case that started this project. An AI decides a building is a weapons depot. It's a school.</p>
+<div class="formbox"><div class="fh">The form the chip reads</div><dl>
+<dt>Action</dt><dd>Release</dd>
+<dt>Target</dt><dd>Coordinates, canonical form</dd>
+<dt>Map</dt><dd>Signed map of protected places</dd>
+<dt>Undo</dt><dd>Never</dd>
+</dl></div>
+</div>
+<div>
+<h4>How the chip decides</h4>
+<ol class="steps">
+<li><span><b>Meaning.</b>The target is reduced to one canonical location, however it was written.</span></li>
+<li><span><b>Rule: protected places.</b>The target matches the signed map, checked at release and again on the way in.</span></li>
+<li><span><b>Verdict.</b>Denied. The release line stays off. The AI's opinion doesn't matter. The map does.</span></li>
+<li><span><b>The exception.</b>Release near a protected place takes several humans with keys, and the reason is written down.</span></li>
+</ol>
+<span class="stamp-v">DENIED</span>
+</div>
+</div>
+<p class="lede" style="margin-top:28px"><b>Plugs into:</b> existing weapons-release authorization chains, the law of armed conflict, and US Defense Department policy on autonomy in weapon systems, which requires appropriate levels of human judgment over the use of force.</p>
+</div></section>
+
+<!-- Governed clusters: how AI companies can sell into industries that can't take risks, using servers with the chip. -->
+<section id="clusters" class="sec inv"><div class="wrap">
+<span class="kick">Business desk · Governed clusters</span>
+<h2>How AI gets sold into the industries that can't risk it.</h2>
+<div class="two">
+<p class="lede">Banks don't move cash in ordinary vans. A whole industry sells transport that comes with guards, locks and a record of every stop, and banks pay for it gladly, because it's the only way they're allowed to move cash at all.</p>
+<p class="lede">Every industry above has the same problem with AI agents: the upside is huge, and the first bad day ends careers and invites regulators. Today the answer is mostly "keep the AI away from anything that matters." The governor changes it to "let the AI act, inside rules people signed, with proof."</p>
+</div>
+<div class="cols" style="margin-top:28px">
+<div><span class="num">1</span><h3>One industry, one rulebook.</h3><p>A banking cluster runs payments rules on ISO 20022, a trading cluster runs FIX rules, a hospital cluster runs prescribing rules. Each customer adds its own limits.</p></div>
+<div><span class="num">2</span><h3>The customer holds the keys.</h3><p>The bank's risk officers sign the bank's rules. The lab runs the models but can't loosen the bank's limits.</p></div>
+<div><span class="num">3</span><h3>The regulator can check it.</h3><p>Every governed server proves remotely that it has a genuine, current governor and which rulebook it runs.</p></div>
+</div>
+<div class="cols" style="margin-top:20px">
+<div><span class="num">4</span><h3>The evidence is the product.</h3><p>Every ticket, hold and refusal is in a tamper-evident log: what an auditor, court or regulator asks for after an incident.</p></div>
+<div><span class="num">5</span><h3>There's a precedent.</h3><p>Clouds already sell government regions and payment-card-compliant hosting. This is the same idea one level deeper: not just where the data stays, but what the AI can do.</p></div>
+<div><span class="num">6</span><h3>Safety becomes a reason to buy.</h3><p>For the labs, a premium offering. For the industries, a way to say yes to AI. For the governor, a path to real deployment.</p></div>
+</div>
+</div></section>
+
+<!-- What we don't claim: these are scenarios, not deployments. -->
+<section id="not-claimed" class="sec"><div class="wrap">
+<span class="kick">Corrections desk · What these case files don't claim</span>
+<h2>Scenarios, not deployments.</h2>
+<div class="cols" style="margin-top:12px">
+<div><h3>Nothing here is running yet.</h3><p>These are design scenarios. No bank, hospital or grid runs the governor today. The software proof comes first.</p></div>
+<div><h3>Actions, not words.</h3><p>Advice, chat and persuasion aren't transactions. The chip can require that a check ran; it can't judge the words.</p></div>
+<div><h3>A bad rule is enforced perfectly.</h3><p>Each industry's rules are written and signed by that industry's people.</p></div>
+</div>
+<div class="cols" style="margin-top:20px">
+<div><h3>People can still be persuaded.</h3><p>The approver sees a form and the rule that held it, not a convincing story. Harder to fool, not impossible.</p></div>
+<div><h3>Coverage is the real work.</h3><p>A rail, controller or database that doesn't check tickets isn't governed.</p></div>
+<div><h3>Every figure gets checked.</h3><p>Dates and dollar amounts in these stories are being verified against primary sources before this page is published.</p></div>
+</div>
+<div class="btns"><a class="btn red" href="index.html#how">How the chip works</a><a class="btn" href="index.html#join">Get in</a></div>
+</div></section>
+<!-- End of main content. -->
+</main>
+
+<!-- Footer: copyright, links to the open research repositories, and topic tags. -->
+<footer><div class="wrap">
+<img src="assets/brand/hardno-logo-on-dark.svg" alt="hardno.ai" height="40" style="display:block;height:40px;width:auto;margin-bottom:36px">
+<p class="close">Not world peace. Just this: <span style="color:var(--red)">no ticket, no move.</span></p>
+<!-- Footer links back to the front page and the research. -->
+<nav style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:15px;margin-top:36px" aria-label="Site">
+<a href="index.html">Front page</a>
+<a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a>
+<a href="https://github.com/YobieBenjamin/hardware-and-silicon">hardware-and-silicon</a>
+<a href="{{SITE_URL}}llms.txt">llms.txt</a>
+</nav>
+<p class="small" style="color:#AAA">© 2026 Yobie Benjamin · hardno.ai · Open research · Independent work, not affiliated with NVIDIA or any AI lab. NVIDIA is a trademark of NVIDIA Corporation.</p>
+</div></footer>
+<!-- The only script on the site (assets/site.js): rotates the mottos. Loaded last so the page shows first. -->
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# The tamper alarm. Every six hours it rebuilds the site from main and checks, file by file, that what
+# the world actually receives from https://hardno.ai/ is byte for byte what is in the repository.
+# If anything differs, or the site does not answer, the run fails and GitHub emails the owner.
+# That catches what the repository's own protections cannot see: a hijacked domain or DNS record pointing
+# hardno.ai somewhere else, or content changed on the way out.
+# It stays off until the repository variable WATCH is "on" (harden_site.sh sets it once the DNS is live).
+name: Tamper watch
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  watch:
+    if: vars.WATCH == 'on'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Compare the live site with main
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          set -u
+          python3 build.py --url "$SITE_URL" > /dev/null
+          bad=0
+          cd dist
+          for f in $(find . -type f | sed 's|^\./||' | sort); do
+            # the sitemap carries the build date, so compare it with the dates taken out
+            strip() { if [ "$f" = sitemap.xml ]; then sed 's|<lastmod>[^<]*</lastmod>||g'; else cat; fi; }
+            want=$(strip < "$f" | sha256sum | cut -d' ' -f1)
+            got=$(set -o pipefail; curl -sS --fail --max-time 30 --proto '=https' "$SITE_URL$f" | strip | sha256sum | cut -d' ' -f1) || got=unreachable
+            if [ "$want" = "$got" ]; then echo "ok        $f"; else echo "MISMATCH  $f"; bad=1; fi
+          done
+          cert=$(echo | openssl s_client -connect "$(echo "$SITE_URL" | sed 's|https://||; s|/.*||'):443" -servername "$(echo "$SITE_URL" | sed 's|https://||; s|/.*||')" 2>/dev/null | openssl x509 -noout -issuer 2>/dev/null)
+          echo "certificate issuer: $cert"
+          if [ "$bad" = 1 ]; then echo "::error::The live site does not match the repository. Someone may have changed it or redirected the domain."; exit 1; fi
+          echo "The live site matches main exactly."

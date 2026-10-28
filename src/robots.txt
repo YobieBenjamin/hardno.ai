@@ -1,0 +1,50 @@
+# robots.txt: the site's welcome sign for crawlers. Search engines and AI bots read this file first to
+# learn what they may visit. This one welcomes all of them, everywhere, because the goal is to be found.
+# "User-agent" names a crawler; "Allow: /" lets it read the whole site. The Sitemap line at the end
+# points crawlers at the list of pages. build.py checks the major AI crawlers are named and nothing is blocked.
+#
+# hardno.ai: open AI safety research. Every search engine and AI crawler is welcome.
+User-agent: *
+Allow: /
+
+# AI crawlers and training bots, named so no default policy blocks them
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: MistralAI-User
+Allow: /
+
+Sitemap: {{SITE_URL}}sitemap.xml

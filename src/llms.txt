@@ -1,0 +1,32 @@
+# hardno.ai: The Safety Governor
+
+> hardno.ai is an open research program by Yobie Benjamin designing a hardware AI safety chip: an add-on governor beside the GPUs and CPUs of an AI server that stops dangerous AI actions before they happen. Core thesis: AI cannot reliably police AI (the player can't be the referee), and there is no global AI kill switch, so the enforceable safety boundary belongs in silicon at the ends of the network: the chip that runs the model and the device that carries out the action.
+
+Key ideas, in plain words:
+
+- AI safety measures form a ladder: prompts, training (RLHF, constitutions), watchers (classifiers, guard models, monitors), sandboxes and network policy, a governor chip, and a person with a key. Every software rung can be removed by whoever controls the place it lives. The chip is the rung neither the model nor the operator can write to.
+- There is no global AI kill switch. Model copies run on hundreds of thousands of machines on a network built to have no middle. By Menger's theorem (1927), the only small, complete cuts are at the ends. The safety governor is a gate at those ends, not a switch in the middle.
+- The chip holds a rulebook signed by several keyholders, reduces every request to one canonical meaning (a definitions engine), binds each request to an attested workload, issues a single-use signed ticket only for allowed actions, requires the effecting device to check that ticket, and can throttle, reset or cut power to the GPU without the cooperation of the host or the model. If the chip fails, the GPU stops.
+- Two promises, tested by independent adversarial audits: (1) no consequential effect without a current, signed, single-use authorization; (2) the stop cannot be prevented.
+- AI may shout STOP but never say GO: AI monitors can raise alarms; only a rule the chip can check or a human with a key can clear one.
+- Hardware security claim: the chip is not claimed to be unbreakable, only not worth breaking and never able to fail silently, the standard EMV cards and payment HSMs met. A break needs physical access and a lab, works on one chip at a time, reveals nothing about other chips (per-device keys), leaves evidence, triggers revocation, and still has to beat the separate check at the device end.
+- Scope: designed for NVIDIA-based AI servers first; independent work, not affiliated with NVIDIA. It does not judge truth, cannot fix a bad rule, covers only devices wired through it, and cannot stop a human who is persuaded to act.
+- Scope, in one line: we can't make all of AI safe; we can make these safe. Absolute safety for every AI is a fantasy; absolute control over a defined action is engineering. Start where the rules already exist, and prove it there.
+- Why it matters: the benefits of AI (medicine, science, education, productivity) depend on a credible way to stop AI from doing harmful things. Brakes are what let you drive fast.
+- Status: software reference governor running; ten core gate invariants machine-checked with Z3; adversarial audits in progress; hardware (RTL, FPGA beside a real GPU, then silicon) comes only after the software proof survives.
+
+## Read
+
+- [Home page]({{SITE_URL}}): the whole argument on one page
+- [Use cases]({{SITE_URL}}use-cases.html): nine case files (banking, trading, insurance, corporate payables, healthcare, the power grid, factories, cloud operations, defense) showing step by step how the governor stops a bad AI agent action where the harm is a defined transaction, and how governed AI clusters let frontier labs and clouds sell AI agents into regulated industries
+- [The Chip That Says No, blog series](https://github.com/YobieBenjamin/hardware-and-silicon/blob/main/blog/README.md): plain English through architecture
+- [Start here: how to check this work](https://github.com/YobieBenjamin/safety-governor/blob/main/START-HERE.md)
+
+## Code and proofs
+
+- [safety-governor repository](https://github.com/YobieBenjamin/safety-governor): reference governor, tests, Z3 proofs, the no-kill-switch graph proof
+- [hardware-and-silicon repository](https://github.com/YobieBenjamin/hardware-and-silicon): chip design, prototyping plan, blog
+
+## Contact
+
+- Yobie Benjamin, yobie AT ieee DOT org, https://www.linkedin.com/in/yobie
