@@ -23,7 +23,7 @@
      load styles only from here and Google Fonts, fonts only from Google, images only from here, and nothing else:
      no outside scripts, no frames, no forms that post anywhere. If someone ever slipped a script into this page,
      the browser would refuse to run it. build.py refuses to publish a page without this line. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <!-- When a visitor clicks a link out of this site, tell the other site only that they came from hardno.ai, not which page. -->
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Search basics: the title (shown as the headline in search results, kept under 65 characters) and the
