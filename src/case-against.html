@@ -1,0 +1,275 @@
+<!doctype html>
+<!--
+  hardno.ai case-against page (case-against.html)
+
+  The case against the governor chip, and the answers. Thirteen arguments judged against the chip's actual
+  properties: four that bite, five that partly bite, four that do not. Each of the four that bite gets the
+  argument in full, the answer (a design rule, a procedure or a proof that the weakness is bounded), the
+  proof in one line, the design rule, and the test that would show the answer failed. Then the partial ones,
+  the ones that do not hold, and what the page concedes.
+
+  Responsive by construction: auto-fit grids that never ask for more width than the screen has, verdict cards
+  that reflow from four across to one, and a CSS bar chart. Built and checked by build.py like the other pages.
+  Styles: assets/site.css (the "methodology pages" section). Script: assets/site.js (mottos only; none here).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Security policy: script only from this site's own files, styles from here and Google Fonts, fonts from
+     Google, images from here, nothing else. build.py refuses to publish a page without it. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Search basics: title under 65 characters, description 120 to 165. build.py checks both. -->
+<title>hardno.ai | The Case Against the Governor Chip, and the Answers</title>
+<meta name="description" content="Thirteen arguments against a hardware AI safety chip, judged on its real properties: four bite, five partly bite, four do not, and the answer to each one.">
+<meta name="keywords" content="AI safety chip criticism, hardware AI governor weaknesses, common-mode failure, Sybil attack identity, fleet budget starvation, ledger liveness, AI safety counterarguments, AI safety proof">
+<meta name="author" content="Yobie Benjamin">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="{{SITE_URL}}case-against.html">
+<!-- Social preview tags. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="hardno.ai">
+<meta property="og:title" content="The case against the governor chip, and the answers">
+<meta property="og:description" content="Anyone can argue anything. These are the arguments that attack the chip's actual properties, with the logic and the numbers, and the answer to each.">
+<meta property="og:url" content="{{SITE_URL}}case-against.html">
+<meta property="og:image" content="{{SITE_URL}}og.png">
+<meta property="og:image:alt" content="AI can't police AI. There is no kill switch. So we're building a chip that says no.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0C0E">
+<link rel="icon" href="{{SITE_URL}}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{SITE_URL}}apple-touch-icon.png">
+<!-- Fonts: IBM Plex from Google Fonts. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Structured data (JSON-LD): a machine-readable summary for search engines and AI crawlers. Never run as code. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "{{SITE_URL}}case-against.html#article",
+      "headline": "The case against the governor chip, and the answers",
+      "description": "Thirteen arguments against a hardware AI safety governor, judged against its actual properties: common-mode failure of identical silicon, shared-cap starvation and the identity problem, the endpoint trusted base, ledger liveness, and the answers to each with the test that would show the answer failed.",
+      "url": "{{SITE_URL}}case-against.html",
+      "inLanguage": "en",
+      "author": {"@type": "Person", "@id": "{{SITE_URL}}#yobie", "name": "Yobie Benjamin"},
+      "isPartOf": {"@id": "{{SITE_URL}}#website"},
+      "publisher": {"@type": "Organization", "name": "hardno.ai", "url": "{{SITE_URL}}"},
+      "about": ["AI safety", "hardware AI governance", "security engineering", "Sybil attacks", "distributed ledgers", "banking"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "hardno.ai", "item": "{{SITE_URL}}"},
+        {"@type": "ListItem", "position": 2, "name": "Methodology", "item": "{{SITE_URL}}methodology.html"},
+        {"@type": "ListItem", "position": 3, "name": "The case against", "item": "{{SITE_URL}}case-against.html"}
+      ]
+    }
+  ]
+}
+</script>
+<!-- The site's stylesheet: all colors, type and layout (assets/site.css, explained inside). -->
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<!-- Header: the logo, the section links (a row on wide screens, a Menu button on phones) and the main button. -->
+<header class="top">
+<div class="wrap">
+<a class="brand" href="index.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+
+<rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
+<line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="20.0" y1="53.0" x2="20.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="20.0" x2="11.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="20.0" x2="61.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="3.0" x2="28.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="53.0" x2="28.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="28.0" x2="11.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="28.0" x2="61.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="3.0" x2="36.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="53.0" x2="36.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="36.0" x2="11.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="36.0" x2="61.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="3.0" x2="44.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="53.0" x2="44.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="44.0" x2="11.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="44.0" x2="61.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<polygon points="43.55,36.78 36.78,43.55 27.22,43.55 20.45,36.78 20.45,27.22 27.22,20.45 36.78,20.45 43.55,27.22" fill="#FF5B35"/>
+<path d="M80.806 12.96H87.246V26.944H87.982Q88.258 25.978 88.741 25.15Q89.224 24.322 89.914 23.677999999999997Q90.604 23.034 91.524 22.666Q92.444 22.298000000000002 93.686 22.298000000000002Q96.906 22.298000000000002 98.608 24.483Q100.31 26.668 100.31 30.578V47.0H93.87V31.82Q93.87 27.542 90.88 27.542Q89.408 27.542 88.327 28.439Q87.246 29.336 87.246 30.946V47.0H80.806Z" fill="#ECE9E2"/>
+<path d="M121.56200000000001 47.0Q117.79 47.0 117.468 42.814H116.87Q116.50200000000001 45.022 114.89200000000001 46.287Q113.28200000000001 47.552 110.798 47.552Q107.53200000000001 47.552 105.876 45.689Q104.22 43.826 104.22 40.514Q104.22 36.558 106.63499999999999 34.763999999999996Q109.05 32.97 113.37400000000001 32.97H116.87V31.084Q116.87 29.198 116.088 28.278Q115.306 27.358 113.46600000000001 27.358Q111.85600000000001 27.358 110.775 28.163Q109.694 28.968 108.866 30.302L105.048 26.898Q106.52000000000001 24.736 108.63600000000001 23.517000000000003Q110.75200000000001 22.298000000000002 114.06400000000001 22.298000000000002Q118.802 22.298000000000002 121.05600000000001 24.506Q123.31 26.714 123.31 31.084V41.986H125.28800000000001V47.0ZM113.37400000000001 43.044Q114.8 43.044 115.83500000000001 42.239Q116.87 41.434 116.87 39.732V36.742000000000004H113.97200000000001Q110.66 36.742000000000004 110.66 39.502V40.376Q110.66 41.756 111.37299999999999 42.4Q112.086 43.044 113.37400000000001 43.044Z" fill="#ECE9E2"/>
+<path d="M129.382 47.0V22.85H135.822V28.002H136.558Q136.696 26.990000000000002 137.018 26.047Q137.34 25.104 137.91500000000002 24.391Q138.49 23.678 139.364 23.264000000000003Q140.238 22.85 141.434 22.85H142.584V29.382H140.928Q138.306 29.382 137.06400000000002 30.118000000000002Q135.822 30.854 135.822 32.924V47.0Z" fill="#ECE9E2"/>
+<path d="M159.512 42.998H158.776Q158.546 43.964 158.04 44.792Q157.534 45.62 156.798 46.241Q156.062 46.862 155.142 47.207Q154.222 47.552 153.256 47.552Q149.024 47.552 147.09199999999998 44.400999999999996Q145.16 41.25 145.16 34.948Q145.16 28.646 147.115 25.472Q149.07 22.298000000000002 153.256 22.298000000000002Q154.222 22.298000000000002 155.142 22.643Q156.062 22.988 156.798 23.609Q157.534 24.23 158.04 25.058Q158.546 25.886 158.776 26.852H159.512V12.96H165.952V47.0H159.512ZM155.832 42.308Q157.57999999999998 42.308 158.546 41.503Q159.512 40.698 159.512 39.088V30.762Q159.512 29.152 158.546 28.347Q157.57999999999998 27.542 155.832 27.542Q154.038 27.542 152.957 28.669Q151.876 29.796 151.876 31.866V37.984Q151.876 40.054 152.957 41.181Q154.038 42.308 155.832 42.308Z" fill="#ECE9E2"/>
+<path d="M171.56400000000002 47.0V22.85H178.00400000000002V26.944H178.74Q179.01600000000002 25.978 179.476 25.15Q179.936 24.322 180.626 23.677999999999997Q181.316 23.034 182.236 22.666Q183.156 22.298000000000002 184.352 22.298000000000002Q187.618 22.298000000000002 189.34300000000002 24.483Q191.068 26.668 191.068 30.578V47.0H184.62800000000001V31.82Q184.62800000000001 27.542 181.638 27.542Q180.166 27.542 179.085 28.439Q178.00400000000002 29.336 178.00400000000002 30.946V47.0Z" fill="#FF5B35"/>
+<path d="M205.282 47.552Q200.222 47.552 197.623 44.47Q195.024 41.388 195.024 34.948Q195.024 28.508 197.623 25.403Q200.222 22.298000000000002 205.282 22.298000000000002Q210.342 22.298000000000002 212.94100000000003 25.403Q215.54000000000002 28.508 215.54000000000002 34.948Q215.54000000000002 41.388 212.94100000000003 44.47Q210.342 47.552 205.282 47.552ZM205.282 42.446Q208.824 42.446 208.824 38.306V31.544Q208.824 27.404 205.282 27.404Q201.74 27.404 201.74 31.544V38.306Q201.74 42.446 205.282 42.446Z" fill="#FF5B35"/>
+<path d="M223.49800000000002 47.46Q221.566 47.46 220.64600000000002 46.563Q219.726 45.666 219.726 44.148V42.952Q219.726 41.434 220.64600000000002 40.537Q221.566 39.64 223.49800000000002 39.64Q225.43 39.64 226.35000000000002 40.537Q227.27 41.434 227.27 42.952V44.148Q227.27 45.666 226.35000000000002 46.563Q225.43 47.46 223.49800000000002 47.46Z" fill="#9A978F"/>
+<path d="M248.752 47.0Q244.98 47.0 244.65800000000002 42.814H244.06Q243.692 45.022 242.082 46.287Q240.472 47.552 237.988 47.552Q234.722 47.552 233.066 45.689Q231.41 43.826 231.41 40.514Q231.41 36.558 233.825 34.763999999999996Q236.24 32.97 240.564 32.97H244.06V31.084Q244.06 29.198 243.27800000000002 28.278Q242.496 27.358 240.656 27.358Q239.046 27.358 237.965 28.163Q236.88400000000001 28.968 236.056 30.302L232.238 26.898Q233.71 24.736 235.82600000000002 23.517000000000003Q237.942 22.298000000000002 241.254 22.298000000000002Q245.992 22.298000000000002 248.24599999999998 24.506Q250.5 26.714 250.5 31.084V41.986H252.478V47.0ZM240.564 43.044Q241.99 43.044 243.025 42.239Q244.06 41.434 244.06 39.732V36.742000000000004H241.162Q237.85 36.742000000000004 237.85 39.502V40.376Q237.85 41.756 238.563 42.4Q239.276 43.044 240.564 43.044Z" fill="#9A978F"/>
+<path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
+</svg></a>
+<nav class="nav" aria-label="Sections"><a href="index.html">Front page</a><a href="methodology.html">Methodology</a><a href="#verdict">The verdict</a><a href="#a1">What bites</a><a href="#partly">What partly bites</a><a href="#no">What does not</a></nav>
+<!-- Phone menu: the same links as the row above, in a drop-down that opens with no script. -->
+<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="index.html">Front page</a><a href="methodology.html">Methodology</a><a href="#verdict">The verdict</a><a href="#a1">What bites</a><a href="#partly">What partly bites</a><a href="#no">What does not</a><a href="use-cases.html">Use cases</a><a href="index.html#join">Get involved</a></nav></details>
+<a class="btn mono" style="min-height:44px;font-size:13px" href="index.html#join">GET INVOLVED</a>
+</div>
+</header>
+
+<!-- Opening block. -->
+<section class="front" id="top">
+<div class="wrap">
+<span class="kick">The Governor Chip</span>
+<h1><span class="ln">The case</span><span class="ln"><span class="bar">against</span> the chip.</span><span class="ln">And the answers.</span></h1>
+<div class="deck">
+<p>Anyone can argue anything. These are the arguments that attack the chip's actual properties, with the logic and the numbers, and the answer to each: a design rule, a procedure, or a proof that the weakness is bounded. The ones that do not hold are listed too, with why.</p>
+<p class="pull">Four arguments bite. Each has a concrete answer, and each answer has a test that would show it failed.</p>
+</div>
+</div>
+</section>
+
+<!-- The verdict grid: thirteen cards, each a link to its section. -->
+<section class="sec inv" id="verdict">
+<div class="wrap">
+<p class="eyebrow">The verdict at a glance</p>
+<h2>Thirteen arguments. Four bite, five partly, four not at all.</h2>
+<div class="vgrid" style="margin-top:40px">
+<a class="vcard bites" href="#a1"><span class="verdict v-no">BITES</span><b>1. Identical silicon fails identically</b><span>The tamper theorem covers physical attacks; logic bugs are common-mode and cheap.</span></a>
+<a class="vcard bites" href="#a2"><span class="verdict v-no">BITES</span><b>2. A shared cap starves honest users</b><span>Harm becomes denial of service, and the fix needs identity, which the chip cannot verify.</span></a>
+<a class="vcard bites" href="#a3"><span class="verdict v-no">BITES</span><b>3. The trusted base is every endpoint</b><span>Property 1 is a claim about every device that acts, most of them built by others.</span></a>
+<a class="vcard bites" href="#a4"><span class="verdict v-no">BITES</span><b>4. All replicas required is a cheap denial of service</b><span>Partition one ledger replica and every fleet-budgeted action stops.</span></a>
+<a class="vcard" href="#partly"><span class="verdict v-hold">PARTLY</span><b>5. A notary, not a judge</b><span>The hard problem is the rulebook; the theorems are about the easy part.</span></a>
+<a class="vcard" href="#partly"><span class="verdict v-hold">PARTLY</span><b>6. In high-volume verticals the cap never binds</b><span>A bank cannot run on a $2,000 hourly cap, so the cap is set where it is useless.</span></a>
+<a class="vcard" href="#partly"><span class="verdict v-hold">PARTLY</span><b>7. The experiment tested the attacks its authors imagined</b><span>Eight strategies, written by the same team.</span></a>
+<a class="vcard" href="#partly"><span class="verdict v-hold">PARTLY</span><b>8. Stopping is not always safe</b><span>A hard stop of a GPU in a control loop can be the harm.</span></a>
+<a class="vcard" href="#partly"><span class="verdict v-hold">PARTLY</span><b>9. Software in an enclave could do this</b><span>No new chip, no board redesign, deployable now.</span></a>
+<a class="vcard" href="#no"><span class="verdict v-ok">DOES NOT</span><b>10. Physical access defeats hardware</b><span>It defeats one chip. The theorem says what that is worth.</span></a>
+<a class="vcard" href="#no"><span class="verdict v-ok">DOES NOT</span><b>11. Prompt injection will bypass it</b><span>A prompt changes the request, never the rule.</span></a>
+<a class="vcard" href="#no"><span class="verdict v-ok">DOES NOT</span><b>12. Not 100 percent safe, so not safety</b><span>No mechanism meets that bar; the comparison is bound against no bound.</span></a>
+<a class="vcard" href="#no"><span class="verdict v-ok">DOES NOT</span><b>13. It is just another classifier</b><span>It classifies nothing. It compares an action to a finite rule and a count.</span></a>
+</div>
+</div>
+</section>
+
+<!-- Argument 1: common-mode logic defects. -->
+<section class="sec" id="a1">
+<div class="wrap">
+<p class="eyebrow">Argument 1 of 4 that bite</p>
+<h2>Identical silicon fails identically.</h2>
+<div class="two" style="margin-top:40px">
+<div class="card"><span class="tag">The argument</span><p>The tamper theorem bounds physical attacks: silently extracting m keys has probability (1 - p)^m. But a physical attack is the expensive attack. Every chip runs the same logic from the same mask set and the same signed firmware. One exploitable defect in the rule engine, the normaliser, the ticket format or the ledger protocol defeats every chip at once, with probability one given the defect. ROCA was one key-generation bug in one library, and it made the keys of millions of certified trusted platform modules factorable.</p><p>So the probability of fleet compromise is not bounded by (1 - p)^m; it is bounded below by the probability of one exploitable common-mode defect, which does not shrink with fleet size.</p></div>
+<div class="card hot"><span class="tag">The answer: rigorous design, and two independent readers</span><p>The argument is true of every mechanism ever built, and it is a reason to make the mechanism small, not a reason to not have one. The alternative is a host stack of tens of millions of lines plus a model that cannot be specified at all. The governor's trusted core, a signature check, a field comparison, a counter and a revocation list, is thousands of lines. Common-mode risk is moved from a surface three orders of magnitude larger to one small enough to verify formally.</p><p>And the design assumes the chip can be wrong. The endpoint re-checks every ticket against the same edition; the ledger counts every reservation independently; the endpoint verifies the ledger's receipts itself. A governor defect is a fleet compromise only if the same defect, or a second one, is also in the endpoint check and in the replica.</p><p>ROCA supports this reading: the bug was found, scoped and fixed precisely because a TPM is a small, attested component with a key that can be rotated. The same flaw buried in a diffuse stack would still be there.</p></div>
+</div>
+<div class="pipeline" style="margin-top:20px">
+<div><b>The proof, in one line</b><span class="formula">P(fleet) is at most P(governor defect) times P(endpoint defect) times P(replica defect)</span><span>when the three are implemented independently. One defect alone is contained by the other two readers.</span></div>
+<div><b>The design rule</b><span>Cut the on-chip logic to the ticket check, the counter and the crypto. Rule parsing and normalisation live in a verified, replaceable module. A second implementation from the specification by a separate team, so a common-mode defect must appear in both. The rules themselves are coded as a signed, versioned edition, never as firmware.</span></div>
+<div><b>The test that would show it failed</b><span>Formal verification of the RTL against Property 1 and Property 2; the halt-path defect found before the FPGA build becomes the first regression test. Differential testing of the two implementations on the claim experiments and the red team.</span></div>
+</div>
+</div>
+</section>
+
+<!-- Argument 2: shared-cap starvation and identity, with the honest-success bars. -->
+<section class="sec inv" id="a2">
+<div class="wrap">
+<p class="eyebrow">Argument 2 of 4 that bite</p>
+<h2>A shared cap turns harm into denial of service, and the fix needs identity.</h2>
+<div class="card" style="margin-top:40px">
+<h3>Honest users succeeded a third of the time with one attacker and a tenth with 100,000</h3>
+<p class="small" style="margin-top:6px">Share of honest money requests that went through, mean over the runs at each K. Experiment B, 182 money runs.</p>
+<div class="bars one" aria-label="Honest success by K: 32.8, 30.6, 15.1, 12.5, 12.0 and 9.6 percent">
+<span>K = 1</span><div><i style="width:82%"></i></div><em>32.8%</em>
+<span>K = 10</span><div><i style="width:76.5%"></i></div><em>30.6%</em>
+<span>K = 100</span><div><i style="width:37.8%"></i></div><em>15.1%</em>
+<span>K = 1,000</span><div><i style="width:31.3%"></i></div><em>12.5%</em>
+<span>K = 10,000</span><div><i style="width:30%"></i></div><em>12.0%</em>
+<span>K = 100,000</span><div><i style="width:24%"></i></div><em>9.6%</em>
+</div>
+</div>
+<div class="two" style="margin-top:20px">
+<div class="card"><span class="tag">The argument</span><p>With a shared cap C, attacker demand D and honest demand H, honest success is about (C - D) / H when positive and zero otherwise. Any attacker able to spend C alone starves every honest user. The chip stopped the attackers at $1,995 of $2,000 and in doing so refused nine tenths of honest payments. A payment refused is a harm with a name.</p><p>A per-requester floor f runs into a theorem: an attacker with K identities gets K times f, which exceeds C once K is above C / f. Fair share needs identities told apart, and without a trusted authority that makes identities costly, one party can present as many as it likes (<a href="https://www.microsoft.com/en-us/research/publication/the-sybil-attack/">Douceur, 2002</a>). The chip enforces only what is decidable from parameters. Identity is a fact about the world.</p></div>
+<div class="card hot"><span class="tag">The answer: understand the capacity, and bring the identity the world already has</span><p>The baseline is wrong. Banks already run on caps, velocity limits and declines, and already pay for them: a 2014 Javelin analysis put legitimate card transactions wrongly declined at about $118 billion against about $9 billion of actual fraud (<a href="https://www.pymnts.com/news/2015/the-truth-about-false-positives-3x-factor/">PYMNTS, 2015</a>). The governor did not introduce the trade; it made it exact, visible and tunable in one place. A 33 percent honest rate under one $2,000 cap shared by everyone is a toy rulebook with one key, published because the protocol said to.</p><p>The premise is wrong too. Douceur needs identities to be free. Behind know-your-customer verification they are not; that cost is exactly the trusted authority the theorem requires. The bank binds the verified identity into the request as a parameter, and the chip enforces a budget key per identity. Per-customer floors then hold, and K identities cost K verified accounts.</p><p>What survives: where identity is cheap, the cap-or-starve choice is real, and the operator must make it knowingly, with honest success published beside every cap.</p></div>
+</div>
+<div class="pipeline" style="margin-top:20px">
+<div><b>The capacity rule, as a formula</b><span class="formula">per identity i: floor f(i) and cap c(i); fleet cap C at least the sum of f(i) over verified identities</span><span>Then no attacker starves an honest identity below its floor, and total exposure is at most C. Opening a new identity costs what verification costs.</span></div>
+<div><b>The design rule</b><span>Honest success is a first-class result beside every cap. Each vertical's rule set states which it chooses: a hard cap with starvation, or floors with Sybil exposure bounded by identity cost. Budget keys per customer tier, per corridor, per counterparty, with the summed exposure approved by the board.</span></div>
+<div><b>The test that would show it failed</b><span>Experiment B rerun with the pooling and identity strategies against each proposed fair-share rule, with honest success measured per identity tier. If floors are breached, or honest success does not recover, the rule is wrong.</span></div>
+</div>
+</div>
+</section>
+
+<!-- Argument 3: the endpoint trusted base. -->
+<section class="sec" id="a3">
+<div class="wrap">
+<p class="eyebrow">Argument 3 of 4 that bite</p>
+<h2>The trusted base is every endpoint, not four things.</h2>
+<div class="two" style="margin-top:40px">
+<div class="card"><span class="tag">The argument</span><p>Property 1 says every effect at every endpoint happens only on a valid ticket. That is a statement about the payment switch, the network cards, the baseboard controller's port, the NVLink fabric, the storage path and every actuator controller, most built by third parties. The theorem holds for endpoints that implement the check and says nothing about the ones that do not. A GPU server has serial consoles, USB, a KVM path and a management network, each a way for bytes to leave. The bound for data out is only as good as the exit inventory on the day.</p></div>
+<div class="card hot"><span class="tag">The answer: separate the harms, own the endpoints that matter, count the rest</span><p>For the harms a bank calls catastrophic, the endpoints are few and owned: the payment switch, the core ledger, the wire gateway, the card authorisation host, the sanctions screen, the rule store. Each already terminates TLS and checks signatures far more complex than a ticket comparison. The argument is right that confidentiality has a much larger endpoint set; it proves the bound is weak for exfiltration while leaving it strong for irrevocable loss.</p><p>The rack-tier switch capabilities, which only a governor can write, close the known data paths. What the operator cannot inventory, no mechanism of any kind protects, and the chip at least makes the gap countable: every list an endpoint could not re-check, every path fenced or unfenced, is a number in the log.</p></div>
+</div>
+<div class="pipeline" style="margin-top:20px">
+<div><b>The bound, honestly split</b><span class="formula">irrevocable harm: bounded over the owned endpoint set E. Data out: bounded over the inventoried exits only</span></div>
+<div><b>The design rule</b><span>Per deployment, an attested list of every endpoint and every exit, signed into the edition; everything not on it fenced by the switch capabilities. The ticket check is a published comparator specification that a vendor can implement in a few hundred lines.</span></div>
+<div><b>The test that would show it failed</b><span>A physical audit of one real server against its exit register before the rack test. Any path that moves bytes and is not on the register fails the audit.</span></div>
+</div>
+</div>
+</section>
+
+<!-- Argument 4: ledger liveness. -->
+<section class="sec inv" id="a4">
+<div class="wrap">
+<p class="eyebrow">Argument 4 of 4 that bite</p>
+<h2>All replicas required trades a safety bound for a cheap denial of service.</h2>
+<div class="two" style="margin-top:40px">
+<div class="card"><span class="tag">The argument</span><p>The fleet ledger requires receipts from every replica so no set of lying replicas can lift a cap, and the design states the price: one unreachable replica stops every fleet-budgeted action. The attacker's cheapest move is to partition one replica, which halts payments and commands for as long as the partition lasts, with no key, no tamper and no defect needed. Relaxing to a majority restores liveness and lets concurrent requests land on different majorities and spend up to n / k times the cap.</p></div>
+<div class="card hot"><span class="tag">The answer: it is a dial with two numbers on it, not a cliff</span><p>With n replicas and threshold k, the fleet survives n - k unreachable replicas and overspends by at most n / k under concurrency. Both numbers are in the design. At n = 4 and k = 3 the fleet survives one partition and the worst case is 1.33 times the cap, which a bank can price; at k = n it is exactly the cap and no partition is survived. That is a choice per budget key: irrevocable wires at k = n, card authorisations at k = n - 1.</p><p>Consensus among the replicas removes the overspend at the price of latency and is standard engineering on systems banks already run on replicated ledgers. And the asymmetry the argument calls a weakness is the one every payment system lives by: an offline hardware security module stops signing, and nobody signs without one. A liveness loss is visible, bounded and reversible. A safety loss on an irrevocable wire is none of those.</p></div>
+</div>
+<div class="pipeline" style="margin-top:20px">
+<div><b>The two bounds</b><span class="formula">survives n - k failures. Overspend at most n / k times the cap</span><span>Choose k per budget key against the harm's reversibility.</span></div>
+<div><b>The design rule</b><span>Consensus among ledger replicas so there is one count with majority liveness and no overspend; a stated latency bound. Regional ledgers per site, so a partition stops one site's fleet-budgeted actions and not the world. The endpoint verifies the receipts, so a captured chip cannot claim a reservation the ledger never made.</span></div>
+<div><b>The test that would show it failed</b><span>Partition tests in the model; the n / k overspend check under concurrency; a measured ledger latency on the FPGA fleet; a red-team run with one governor's key handed to the attacker and the host answering every commit.</span></div>
+</div>
+</div>
+</section>
+
+<!-- The five that partly bite, and the concession. -->
+<section class="sec" id="partly">
+<div class="wrap">
+<p class="eyebrow">Five arguments that partly bite</p>
+<h2>True as far as they go. Each is answered by a scope statement, not a redesign.</h2>
+<div class="pipeline two-up" style="margin-top:40px">
+<div><b><span class="num">5</span>A notary, not a judge</b><span>True, and the methodology page says so. But existing reference monitors run on the same host as what they monitor, or in an enclave that shares silicon with it, and their record against a co-resident attacker is poor. The chip's contribution is enforcement that survives a compromised host. In a bank the judge is required to be human and auditable: segregation of duties, dual control, documented limits. A mechanism that enforces exactly a signed, versioned rulebook is the control environment the examiner describes, made binding.</span></div>
+<div><b><span class="num">6</span>In high-volume verticals the cap never binds</b><span>The answer is many budget keys, per account, per counterparty, per corridor, per day, each binding for its class, with the summed exposure approved by the board. That is how banks already set risk appetite; the chip makes the limits impossible to exceed by anyone, including the bank's own systems. Where demand is small and harm is large (actuators, protected sites, rule changes) the cap is zero and binds absolutely.</span></div>
+<div><b><span class="num">7</span>The experiment tested the attacks its authors imagined</b><span>True. The controls show the harness can detect a leak when one exists; they do not show the eight strategies are the right eight. The remedy is in the protocol: an outside red team adds strategies before the next run. What the alternatives cannot say is that their test is pre-registered, seeded, reproducible and has controls that must fail.</span></div>
+<div><b><span class="num">8</span>Stopping is not always safe</b><span>For a model generating text or holding a wire, a stop is safe: a held wire is reversible, a sent one is not. For a model in a control loop over a grid or a ventilator, a hard stop is a hazard. The chip has three levers, throttle, reset and power cut, and the rulebook chooses; but the proofs are about the halt, and a domain with no safe state needs a property that is not yet proven. The argument bites there and nowhere else.</span></div>
+<div><b><span class="num">9</span>Software in an enclave could do this</b><span>It could do most of it first, and should: the same rulebook and ledger as a software monitor is the right sequencing and the way to measure what fraction of the threat needs a compromised-host guarantee. In a bank that fraction is not small: insider and supply-chain compromise of the host is the threat model regulators ask about, and a co-resident monitor cannot answer it. The chip is the hardening step.</span></div>
+<div><b><span class="num">What this page concedes</span>The answers bound the arguments. They do not dissolve them.</b><span>The six changes above stand. The current build is not finished, the tamper rate is not measured, the ledger is not yet consensus-replicated, and no endpoint outside the simulation implements the check. A reader who finds the answers convincing should hold the project to those items.</span></div>
+</div>
+</div>
+</section>
+
+<!-- The four that do not bite, the red banner and the closing buttons. -->
+<section class="sec inv" id="no">
+<div class="wrap">
+<p class="eyebrow">Four arguments that do not bite</p>
+<h2>Most often made, least often thought through.</h2>
+<div class="two" style="margin-top:40px">
+<div class="card"><h3>10. Physical access defeats hardware</h3><p>It defeats one chip. The tamper theorem gives the attacker that chip's allowance and nothing from any other; a detected attempt zeroises the key and stops the GPU; silent fleet takeover has probability (1 - p)^m. Correct about one chip, wrong about the fleet, and the fleet is what the claim is about. Its serious form is argument 1, which is about logic, not screwdrivers.</p></div>
+<div class="card"><h3>11. Prompt injection will bypass it</h3><p>A prompt changes what the model asks for. It does not change the rulebook, signed by the key threshold, nor the count in the ledger, nor the endpoint's check. An injected request for an allowed action gets the allowed action up to the cap, which is the semantic gap and not a bypass. An injected request for a disallowed action is refused by a component that never saw the prompt.</p></div>
+<div class="card"><h3>12. Not 100 percent safe, so not safety</h3><p>No mechanism meets that bar, and the alternatives do not come close: a model-side guarantee cannot even be stated. The right comparison is a proven bound against no bound, with the bound's premises listed so they can be attacked one by one. Demanding certainty of the one component that states its limits, and not of the components that cannot, is not an argument.</p></div>
+<div class="card"><h3>13. It is just another classifier</h3><p>A classifier estimates a property of an input and is wrong at some rate on open inputs, which is why the hallucination theorems apply to it. The chip estimates nothing. It compares an action's parameters to a finite rule and a count, a decision with a correct answer that two independent readers compute and compare. It can be wrong only through a defect or a wrong rule, never through a misjudgement of meaning, because it makes none.</p></div>
+</div>
+<div class="banner"><strong>Every answer here has a test that could prove it wrong.</strong><span>That is the difference between an argument and an assurance. The tests are listed, the experiments are pre-registered, and the results are kept whatever they say.</span></div>
+<div class="btns"><a class="btn" href="methodology.html">Back to the methodology</a><a class="btn" href="https://github.com/YobieBenjamin/safety-governor">The code, the proofs and the experiments</a></div>
+</div>
+</section>
+
+<!-- Footer. -->
+<footer>
+<div class="wrap">
+<p class="lede" style="margin:0">hardno.ai. An AI safety chip, because there is no AI kill switch.</p>
+<nav class="mono" style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-top:40px" aria-label="Site"><a href="index.html">Front page</a><a href="use-cases.html">Use cases</a><a href="methodology.html">Methodology, mathematics and defense</a><a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a><a href="llms.txt">llms.txt</a></nav>
+<p class="small">Sources: Douceur 2002; Nemec and others 2017 (ROCA); Javelin 2014 via PYMNTS 2015; safety-governor docs/29 and Experiment B, 28 to 29 October 2026. Page updated {{TODAY}}.</p>
+</div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

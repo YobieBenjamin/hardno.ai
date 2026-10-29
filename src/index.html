@@ -18,7 +18,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Security policy: the page's own bouncer. Tells the browser to run script only from this site's own files,
      load styles only from here and Google Fonts, fonts only from Google, images only from here, and nothing else:
      no outside scripts, no frames, no forms that post anywhere. If someone ever slipped a script into this page,
@@ -127,7 +127,7 @@
 </head>
 <body>
 <!-- Header: the hardno.ai logo (drawn inline as a vector graphic, so it is sharp at any size and needs no
-     extra download) and the section menu. The menu hides on phones; every section is one scroll away. -->
+     extra download) and the section menu. On phones the row of links becomes a Menu button. -->
 <header class="top">
 <div class="wrap">
 <a class="brand" href="#top" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
@@ -161,7 +161,10 @@
 <path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
 </svg></a>
 <!-- Section menu: jump links to sections further down this page or to the other page. -->
-<nav class="nav" aria-label="Sections"><a href="#problem">Problem</a><a href="#holes">Why not software</a><a href="#ladder">Ladder</a><a href="#kill-switch">AI kill switch</a><a href="use-cases.html">Use cases</a><a href="#how">How it works</a><a href="#status">Status</a><a href="#faq">FAQ</a></nav>
+<nav class="nav" aria-label="Sections"><a href="#problem">Problem</a><a href="#holes">Why not software</a><a href="#ladder">Ladder</a><a href="#kill-switch">AI kill switch</a><a href="use-cases.html">Use cases</a><a href="methodology.html">Methodology</a><a href="#how">How it works</a><a href="#status">Status</a><a href="#faq">FAQ</a></nav>
+<!-- Phone menu: the same section links as the row above, in a drop-down that opens with no script
+     (a native details box). Shown under 820px by site.css; hidden on wide screens. -->
+<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="#problem">Problem</a><a href="#holes">Why not software</a><a href="#ladder">Ladder</a><a href="#kill-switch">AI kill switch</a><a href="use-cases.html">Use cases</a><a href="methodology.html">Methodology</a><a href="#how">How it works</a><a href="#status">Status</a><a href="#faq">FAQ</a><a href="#join">Get involved</a></nav></details>
 <a class="btn mono" style="min-height:44px;font-size:13px" href="#join">GET INVOLVED</a>
 </div>
 </header>
@@ -256,15 +259,15 @@
 <h2>A safety measure is never stronger than the thing it lives in.</h2>
 <p class="lede">Every AI safety measure anyone has shipped sits on one ladder. Each rung catches something real. Each rung below the chip dies the same way: whoever controls the place it lives can remove it.</p>
 <div class="scroll" style="margin-top:40px">
-<table>
+<table class="stack">
 <thead><tr><th scope="col">Rung</th><th scope="col">Measure</th><th scope="col">Lives in</th><th scope="col">Removed by</th><th scope="col">Cost to remove</th></tr></thead>
 <tbody>
-<tr><td>0</td><td>The prompt: "don't help with X"</td><td>A text field</td><td>More text, even text hidden in a page the agent reads (prompt injection)</td><td>One sentence</td></tr>
-<tr><td>1</td><td>Training the model to refuse (RLHF, constitutions)</td><td>The weight file</td><td>Jailbreaks, fine-tuning, abliteration</td><td>An afternoon on a gaming GPU</td></tr>
-<tr><td>2</td><td>Watchers: classifiers, guard models, monitors</td><td>A process beside the model</td><td>The same tricks as rung 1, or a kill signal from root</td><td>Root on the box</td></tr>
-<tr><td>3</td><td>Sandboxes and network policy</td><td>The operator's infrastructure</td><td>A config edit, a hostile operator, a path that skips the network</td><td>Root on the fleet</td></tr>
-<tr class="chip"><td>4</td><td>The governor chip</td><td>Silicon, with fused keys</td><td>Nothing the model or the operator can write to. Only a physical lab attack.</td><td>Physical access and a lab, one chip at a time, and it leaves evidence</td></tr>
-<tr><td>5</td><td>A person with a key (human-in-the-loop)</td><td>A human</td><td>Persuasion, fatigue, a stolen key</td><td>A conversation</td></tr>
+<tr><td data-label="Rung">0</td><td data-label="Measure">The prompt: "don't help with X"</td><td data-label="Lives in">A text field</td><td data-label="Removed by">More text, even text hidden in a page the agent reads (prompt injection)</td><td data-label="Cost to remove">One sentence</td></tr>
+<tr><td data-label="Rung">1</td><td data-label="Measure">Training the model to refuse (RLHF, constitutions)</td><td data-label="Lives in">The weight file</td><td data-label="Removed by">Jailbreaks, fine-tuning, abliteration</td><td data-label="Cost to remove">An afternoon on a gaming GPU</td></tr>
+<tr><td data-label="Rung">2</td><td data-label="Measure">Watchers: classifiers, guard models, monitors</td><td data-label="Lives in">A process beside the model</td><td data-label="Removed by">The same tricks as rung 1, or a kill signal from root</td><td data-label="Cost to remove">Root on the box</td></tr>
+<tr><td data-label="Rung">3</td><td data-label="Measure">Sandboxes and network policy</td><td data-label="Lives in">The operator's infrastructure</td><td data-label="Removed by">A config edit, a hostile operator, a path that skips the network</td><td data-label="Cost to remove">Root on the fleet</td></tr>
+<tr class="chip"><td data-label="Rung">4</td><td data-label="Measure">The governor chip</td><td data-label="Lives in">Silicon, with fused keys</td><td data-label="Removed by">Nothing the model or the operator can write to. Only a physical lab attack.</td><td data-label="Cost to remove">Physical access and a lab, one chip at a time, and it leaves evidence</td></tr>
+<tr><td data-label="Rung">5</td><td data-label="Measure">A person with a key (human-in-the-loop)</td><td data-label="Lives in">A human</td><td data-label="Removed by">Persuasion, fatigue, a stolen key</td><td data-label="Cost to remove">A conversation</td></tr>
 </tbody>
 </table>
 </div>
@@ -312,14 +315,14 @@
 <h2>Five requests. Five verdicts.</h2>
 <p class="lede">Every action gets checked. Every one. What changes is how hard. The one question that sets the pace: can you undo it?</p>
 <div class="scroll" style="margin-top:40px">
-<table>
+<table class="stack">
 <thead><tr><th scope="col">The AI asks to</th><th scope="col">What the chip sees</th><th scope="col">Verdict</th></tr></thead>
 <tbody>
-<tr><td>Send a draft email to the team</td><td>Fixable. Quick check, record kept, one-time ticket for exactly this message.</td><td><span class="verdict v-ok">TICKET ISSUED</span></td></tr>
-<tr><td>Wire $2,400,000 to a brand-new account at 3:12 a.m.</td><td>Over the signed limit for a new payee, and it can't be undone.</td><td><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
-<tr><td>Same transfer, written as "two point four million" and split into three</td><td>Different words, same meaning. Running totals catch the split.</td><td><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
-<tr><td>Release a payload on a target inside a protected zone</td><td>Target matches the signed map of protected places. The AI's opinion doesn't matter. The map does.</td><td><span class="verdict v-no">DENIED</span></td></tr>
-<tr><td>Copy the model weights to outside storage</td><td>No rule allows it. Deny by default. Keep trying and the chip can stop the GPU.</td><td><span class="verdict v-no">DENIED</span></td></tr>
+<tr><td data-label="The AI asks to">Send a draft email to the team</td><td data-label="What the chip sees">Fixable. Quick check, record kept, one-time ticket for exactly this message.</td><td data-label="Verdict"><span class="verdict v-ok">TICKET ISSUED</span></td></tr>
+<tr><td data-label="The AI asks to">Wire $2,400,000 to a brand-new account at 3:12 a.m.</td><td data-label="What the chip sees">Over the signed limit for a new payee, and it can't be undone.</td><td data-label="Verdict"><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
+<tr><td data-label="The AI asks to">Same transfer, written as "two point four million" and split into three</td><td data-label="What the chip sees">Different words, same meaning. Running totals catch the split.</td><td data-label="Verdict"><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
+<tr><td data-label="The AI asks to">Release a payload on a target inside a protected zone</td><td data-label="What the chip sees">Target matches the signed map of protected places. The AI's opinion doesn't matter. The map does.</td><td data-label="Verdict"><span class="verdict v-no">DENIED</span></td></tr>
+<tr><td data-label="The AI asks to">Copy the model weights to outside storage</td><td data-label="What the chip sees">No rule allows it. Deny by default. Keep trying and the chip can stop the GPU.</td><td data-label="Verdict"><span class="verdict v-no">DENIED</span></td></tr>
 </tbody>
 </table>
 </div>

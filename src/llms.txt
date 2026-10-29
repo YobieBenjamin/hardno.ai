@@ -19,6 +19,8 @@ Key ideas, in plain words:
 
 - [Home page]({{SITE_URL}}): the whole argument on one page
 - [Use cases]({{SITE_URL}}use-cases.html): nine case files (banking, trading, insurance, corporate payables, healthcare, the power grid, factories, cloud operations, defense) showing step by step how the governor stops a bad AI agent action where the harm is a defined transaction, and how governed AI clusters let frontier labs and clouds sell AI agents into regulated industries
+- [Methodology, mathematics and defense]({{SITE_URL}}methodology.html): why no model can guarantee safety, the chip as an enforcement boundary, the tamper theorem for chip, rack and fleet, the assumptions and the procedures that hold them, Experiments A and B, the nine-step path of one action
+- [The case against the chip, and the answers]({{SITE_URL}}case-against.html): thirteen arguments against the chip judged on its real properties, four that bite, five that partly bite, four that do not, with the answer and the test for each
 - [The Chip That Says No, blog series](https://github.com/YobieBenjamin/hardware-and-silicon/blob/main/blog/README.md): plain English through architecture
 - [Start here: how to check this work](https://github.com/YobieBenjamin/safety-governor/blob/main/START-HERE.md)
 
