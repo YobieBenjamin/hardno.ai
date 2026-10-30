@@ -172,14 +172,39 @@
 <!-- Main content starts here. Every word is plain HTML, readable with no script at all, so every
      search engine and AI crawler sees the whole site. -->
 <main id="top">
-<!-- Opening: the headline (the page's single h1), the one paragraph pitch, and the two main buttons. -->
-<section style="padding:clamp(64px,9vw,128px) 0 clamp(56px,8vw,112px)">
+<!-- Opening (option E, chosen 30 October 2026): the headline (the page's single h1) says there is an answer and that
+     it is hardware; the line under it scopes the claim (AI filters help, but can't be the last line). Then three doorway
+     cards (what it is, why hardware, how it works), the path an action takes through the chip, and a numbered
+     "Start here" route through the page, so a first-time reader knows where to go next. -->
+<section class="hero" style="padding:clamp(56px,8vw,112px) 0 clamp(48px,7vw,96px)">
 <div class="wrap">
-<p class="eyebrow">hardno.ai · AI safety hardware · An add-on chip for AI servers</p>
-<h1>The player can't be the <span style="color:var(--accent)">referee.</span></h1>
-<p class="lede" style="font-size:clamp(18px,1.8vw,23px);max-width:58ch">Everybody's plan for AI safety is more AI watching AI. That's a player calling his own fouls. The Safety Governor is a chip that sits beside the GPU, where the AI can't reach it, rewrite it or sweet-talk it, and it stops a dangerous action before it happens. Not after. Before.</p>
-<div class="btns"><a class="btn primary" href="#how">See how it says no</a><a class="btn" href="https://github.com/YobieBenjamin/safety-governor">Check the code on GitHub</a></div>
-<p class="cond" style="margin:36px 0 0;font-size:clamp(24px,2.6vw,34px);font-weight:600;line-height:1.15">Humans make the rules. Silicon enforces them. <span style="color:var(--accent)">AI gets neither job.</span></p>
+<p class="eyebrow">The Governor Chip · AI safety in hardware</p>
+<h1 style="max-width:17ch;font-size:clamp(44px,6.6vw,96px)">AI can't be the last line of defense against AI. <span style="color:var(--accent)">Silicon can.</span></h1>
+<p class="lede" style="font-size:clamp(18px,1.8vw,22px);max-width:60ch">AI safety filters help, but they can be fooled, stripped out or simply switched off. The Governor Chip is the line that holds: a small chip on the AI server that checks every dangerous action against rules people signed, and stops it before it happens.</p>
+<div class="btns" style="align-items:center"><a class="btn primary" href="#start">Learn how it works&nbsp;&rarr;</a><span class="small" style="margin:0">Three minutes. No chip-design background needed.</span></div>
+
+<!-- The three doorway cards: each one answers a first question in two sentences and links to the section that goes deeper. -->
+<div class="grid" style="margin-top:48px">
+<a class="card" href="#gate" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">01 · What it is</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">A governor, built in silicon</span><span style="font-size:16px;color:var(--muted)">An engine governor won't let the engine over-rev, whatever the driver does. The Governor Chip does that for AI: a dedicated chip between the AI and the real world.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">Read more &rarr;</span></a>
+<a class="card" href="#holes" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">02 · Why hardware</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">Out of the AI's reach</span><span style="font-size:16px;color:var(--muted)">Software safety runs where the AI runs, so it can be rewritten, deleted or never installed. A separate circuit can't be argued with, and it's there whoever runs the model.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">Read more &rarr;</span></a>
+<a class="card hot" href="#how" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">03 · How it works</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">Ask. Check. Allow, hold or stop.</span><span style="font-size:16px;color:var(--muted)">The AI asks to act. The chip checks a one-time ticket against a rulebook several people signed. Then it allows the action, holds it for a person, or refuses it.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">See it say no &rarr;</span></a>
+</div>
+
+<!-- The path every governed action takes: the AI asks, the chip decides, only then does the real world move. The middle box is the chip, in red. -->
+<div class="pipeline" aria-label="The path of an action through the Governor Chip">
+<div><b>AI model</b><span>wants to act</span></div>
+<div style="background:var(--hot);box-shadow:inset 0 0 0 2px var(--accent)"><b>The Governor Chip</b><span>signed ticket? allow, hold or no</span></div>
+<div><b>The real world</b><span>bank · grid · hospital · factory</span></div>
+</div>
+
+<!-- Start here: a numbered route through the rest of the site, from the problem to where the chip works first. -->
+<div id="start" style="margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+<div><p class="cond" style="margin:0;font-size:30px;font-weight:700">Start here.</p><p style="margin:4px 0 0;color:var(--muted)">Four short stops take you from the problem to the proof.</p></div>
+<nav aria-label="Start here"><ol class="toc" style="margin:0"><li><a href="#problem">1 · The problem</a></li><li><a href="#holes">2 · Why hardware</a></li><li><a href="#how">3 · How it says no</a></li><li><a href="use-cases.html">4 · Where it works first</a></li></ol></nav>
+</div>
+
+<!-- The referee line: the idea the whole project rests on, kept from the first version of the page. -->
+<p class="cond" style="margin:40px 0 0;font-size:clamp(22px,2.4vw,32px);font-weight:600;line-height:1.2">The player can't be the referee. Humans make the rules. Silicon enforces them. <span style="color:var(--accent)">AI gets neither job.</span></p>
 <p class="small">Open research. Designed and tested in software. Core logic proven by machine. Silicon comes after the proof holds.</p>
 </div>
 </section>
