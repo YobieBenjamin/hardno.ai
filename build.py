@@ -62,6 +62,10 @@ PAGES = {
     "index.html": {"path": "", "types": ("WebSite", "Person", "ResearchProject", "FAQPage"), "mention": None},
     "use-cases.html": {"path": "use-cases.html", "types": ("Article", "BreadcrumbList"),
                        "mention": ["AI safety", "banking", "trading", "insurance", "healthcare", "power grid", "cloud", "governed", "no ticket, no move"]},
+    "methodology.html": {"path": "methodology.html", "types": ("Article", "BreadcrumbList"),
+                         "mention": ["tamper theorem", "Property 1", "Property 2", "fleet", "ticket", "Experiment A", "Experiment B", "assumption"]},
+    "case-against.html": {"path": "case-against.html", "types": ("Article", "BreadcrumbList"),
+                          "mention": ["identical silicon", "shared cap", "endpoint", "replica", "the answer", "do not bite"]},
 }
 
 # Documentation rule: each code file must open with a comment that explains what it is.
@@ -69,6 +73,8 @@ PAGES = {
 MUST_EXPLAIN = {
     "index.html": "<!--",
     "use-cases.html": "<!--",
+    "methodology.html": "<!--",
+    "case-against.html": "<!--",
     "assets/site.css": "/*",
     "assets/site.js": "/*",
 }

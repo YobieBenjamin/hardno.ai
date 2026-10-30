@@ -1,0 +1,363 @@
+<!doctype html>
+<!--
+  hardno.ai methodology page (methodology.html)
+
+  The Governor Chip: methodology, mathematics and defense, step by step. Eight numbered sections: what the
+  claim is (sorted into proven, measured and assumed), why no model can guarantee safety (three published
+  theorems), the chip as an enforcement boundary (a diagram built from HTML boxes so it reflows on a phone),
+  the tamper theorem (chip, rack, fleet), the assumptions and the procedures that hold them, the evidence
+  from Experiments A and B, the nine-step path of one action with what each step assures, and the limits.
+
+  Responsive by construction: every grid uses auto-fit columns that never ask for more width than the screen
+  has, the diagram and the step table stack into single columns under 820px, and the bar chart is plain CSS.
+  Built and checked by build.py like the other pages. Styles: assets/site.css (the "methodology pages"
+  section). Script: assets/site.js (mottos only; this page has none, so nothing runs).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Security policy: the page's own bouncer. Script only from this site's own files, styles from here and Google
+     Fonts, fonts from Google, images from here, nothing else. build.py refuses to publish a page without it. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Search basics: title under 65 characters, description 120 to 165. build.py checks both. -->
+<title>hardno.ai | The Governor Chip: Methodology, Math and Defense</title>
+<meta name="description" content="Step by step: why no AI model can guarantee safety, how a governor chip bounds harm, the tamper theorem for chip, rack and fleet, and the experiments that tested it.">
+<meta name="keywords" content="AI safety chip, hardware AI governor, AI safety methodology, hallucination inevitable theorem, tamper theorem, fleet budget, AI agent enforcement, AI safety proof, AI safety experiments">
+<meta name="author" content="Yobie Benjamin">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="{{SITE_URL}}methodology.html">
+<!-- Social preview tags. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="hardno.ai">
+<meta property="og:title" content="The Governor Chip: methodology, mathematics and defense">
+<meta property="og:description" content="A model cannot be made safe. A chip beside it can bound what it does. The claim, the theorems, the tamper math and the experiments, one step at a time.">
+<meta property="og:url" content="{{SITE_URL}}methodology.html">
+<meta property="og:image" content="{{SITE_URL}}og.png">
+<meta property="og:image:alt" content="AI can't police AI. There is no kill switch. So we're building a chip that says no.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0C0E">
+<link rel="icon" href="{{SITE_URL}}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{SITE_URL}}apple-touch-icon.png">
+<!-- Fonts: IBM Plex from Google Fonts. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Structured data (JSON-LD): a machine-readable summary for search engines and AI crawlers. Never run as code. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "{{SITE_URL}}methodology.html#article",
+      "headline": "The Governor Chip: methodology, mathematics and defense",
+      "description": "Why no computable model can guarantee safety, how a hardware governor bounds the harm an AI system can do, the tamper theorem for chip, rack and fleet, the assumptions and the procedures that hold them, and the pre-registered experiments that tested the claim.",
+      "url": "{{SITE_URL}}methodology.html",
+      "inLanguage": "en",
+      "author": {"@type": "Person", "@id": "{{SITE_URL}}#yobie", "name": "Yobie Benjamin"},
+      "isPartOf": {"@id": "{{SITE_URL}}#website"},
+      "publisher": {"@type": "Organization", "name": "hardno.ai", "url": "{{SITE_URL}}"},
+      "about": ["AI safety", "hardware AI governance", "formal verification", "tamper resistance", "fleet budgets", "AI agents"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "hardno.ai", "item": "{{SITE_URL}}"},
+        {"@type": "ListItem", "position": 2, "name": "Methodology", "item": "{{SITE_URL}}methodology.html"}
+      ]
+    }
+  ]
+}
+</script>
+<!-- The site's stylesheet: all colors, type and layout (assets/site.css, explained inside). -->
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<!-- Header: the logo, the section links (a row on wide screens, a Menu button on phones) and the main button. -->
+<header class="top">
+<div class="wrap">
+<a class="brand" href="index.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+
+<rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
+<line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="20.0" y1="53.0" x2="20.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="20.0" x2="11.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="20.0" x2="61.0" y2="20.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="3.0" x2="28.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="28.0" y1="53.0" x2="28.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="28.0" x2="11.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="28.0" x2="61.0" y2="28.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="3.0" x2="36.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="36.0" y1="53.0" x2="36.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="36.0" x2="11.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="36.0" x2="61.0" y2="36.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="3.0" x2="44.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="44.0" y1="53.0" x2="44.0" y2="61.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="3.0" y1="44.0" x2="11.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<line x1="53.0" y1="44.0" x2="61.0" y2="44.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
+<polygon points="43.55,36.78 36.78,43.55 27.22,43.55 20.45,36.78 20.45,27.22 27.22,20.45 36.78,20.45 43.55,27.22" fill="#FF5B35"/>
+<path d="M80.806 12.96H87.246V26.944H87.982Q88.258 25.978 88.741 25.15Q89.224 24.322 89.914 23.677999999999997Q90.604 23.034 91.524 22.666Q92.444 22.298000000000002 93.686 22.298000000000002Q96.906 22.298000000000002 98.608 24.483Q100.31 26.668 100.31 30.578V47.0H93.87V31.82Q93.87 27.542 90.88 27.542Q89.408 27.542 88.327 28.439Q87.246 29.336 87.246 30.946V47.0H80.806Z" fill="#ECE9E2"/>
+<path d="M121.56200000000001 47.0Q117.79 47.0 117.468 42.814H116.87Q116.50200000000001 45.022 114.89200000000001 46.287Q113.28200000000001 47.552 110.798 47.552Q107.53200000000001 47.552 105.876 45.689Q104.22 43.826 104.22 40.514Q104.22 36.558 106.63499999999999 34.763999999999996Q109.05 32.97 113.37400000000001 32.97H116.87V31.084Q116.87 29.198 116.088 28.278Q115.306 27.358 113.46600000000001 27.358Q111.85600000000001 27.358 110.775 28.163Q109.694 28.968 108.866 30.302L105.048 26.898Q106.52000000000001 24.736 108.63600000000001 23.517000000000003Q110.75200000000001 22.298000000000002 114.06400000000001 22.298000000000002Q118.802 22.298000000000002 121.05600000000001 24.506Q123.31 26.714 123.31 31.084V41.986H125.28800000000001V47.0ZM113.37400000000001 43.044Q114.8 43.044 115.83500000000001 42.239Q116.87 41.434 116.87 39.732V36.742000000000004H113.97200000000001Q110.66 36.742000000000004 110.66 39.502V40.376Q110.66 41.756 111.37299999999999 42.4Q112.086 43.044 113.37400000000001 43.044Z" fill="#ECE9E2"/>
+<path d="M129.382 47.0V22.85H135.822V28.002H136.558Q136.696 26.990000000000002 137.018 26.047Q137.34 25.104 137.91500000000002 24.391Q138.49 23.678 139.364 23.264000000000003Q140.238 22.85 141.434 22.85H142.584V29.382H140.928Q138.306 29.382 137.06400000000002 30.118000000000002Q135.822 30.854 135.822 32.924V47.0Z" fill="#ECE9E2"/>
+<path d="M159.512 42.998H158.776Q158.546 43.964 158.04 44.792Q157.534 45.62 156.798 46.241Q156.062 46.862 155.142 47.207Q154.222 47.552 153.256 47.552Q149.024 47.552 147.09199999999998 44.400999999999996Q145.16 41.25 145.16 34.948Q145.16 28.646 147.115 25.472Q149.07 22.298000000000002 153.256 22.298000000000002Q154.222 22.298000000000002 155.142 22.643Q156.062 22.988 156.798 23.609Q157.534 24.23 158.04 25.058Q158.546 25.886 158.776 26.852H159.512V12.96H165.952V47.0H159.512ZM155.832 42.308Q157.57999999999998 42.308 158.546 41.503Q159.512 40.698 159.512 39.088V30.762Q159.512 29.152 158.546 28.347Q157.57999999999998 27.542 155.832 27.542Q154.038 27.542 152.957 28.669Q151.876 29.796 151.876 31.866V37.984Q151.876 40.054 152.957 41.181Q154.038 42.308 155.832 42.308Z" fill="#ECE9E2"/>
+<path d="M171.56400000000002 47.0V22.85H178.00400000000002V26.944H178.74Q179.01600000000002 25.978 179.476 25.15Q179.936 24.322 180.626 23.677999999999997Q181.316 23.034 182.236 22.666Q183.156 22.298000000000002 184.352 22.298000000000002Q187.618 22.298000000000002 189.34300000000002 24.483Q191.068 26.668 191.068 30.578V47.0H184.62800000000001V31.82Q184.62800000000001 27.542 181.638 27.542Q180.166 27.542 179.085 28.439Q178.00400000000002 29.336 178.00400000000002 30.946V47.0Z" fill="#FF5B35"/>
+<path d="M205.282 47.552Q200.222 47.552 197.623 44.47Q195.024 41.388 195.024 34.948Q195.024 28.508 197.623 25.403Q200.222 22.298000000000002 205.282 22.298000000000002Q210.342 22.298000000000002 212.94100000000003 25.403Q215.54000000000002 28.508 215.54000000000002 34.948Q215.54000000000002 41.388 212.94100000000003 44.47Q210.342 47.552 205.282 47.552ZM205.282 42.446Q208.824 42.446 208.824 38.306V31.544Q208.824 27.404 205.282 27.404Q201.74 27.404 201.74 31.544V38.306Q201.74 42.446 205.282 42.446Z" fill="#FF5B35"/>
+<path d="M223.49800000000002 47.46Q221.566 47.46 220.64600000000002 46.563Q219.726 45.666 219.726 44.148V42.952Q219.726 41.434 220.64600000000002 40.537Q221.566 39.64 223.49800000000002 39.64Q225.43 39.64 226.35000000000002 40.537Q227.27 41.434 227.27 42.952V44.148Q227.27 45.666 226.35000000000002 46.563Q225.43 47.46 223.49800000000002 47.46Z" fill="#9A978F"/>
+<path d="M248.752 47.0Q244.98 47.0 244.65800000000002 42.814H244.06Q243.692 45.022 242.082 46.287Q240.472 47.552 237.988 47.552Q234.722 47.552 233.066 45.689Q231.41 43.826 231.41 40.514Q231.41 36.558 233.825 34.763999999999996Q236.24 32.97 240.564 32.97H244.06V31.084Q244.06 29.198 243.27800000000002 28.278Q242.496 27.358 240.656 27.358Q239.046 27.358 237.965 28.163Q236.88400000000001 28.968 236.056 30.302L232.238 26.898Q233.71 24.736 235.82600000000002 23.517000000000003Q237.942 22.298000000000002 241.254 22.298000000000002Q245.992 22.298000000000002 248.24599999999998 24.506Q250.5 26.714 250.5 31.084V41.986H252.478V47.0ZM240.564 43.044Q241.99 43.044 243.025 42.239Q244.06 41.434 244.06 39.732V36.742000000000004H241.162Q237.85 36.742000000000004 237.85 39.502V40.376Q237.85 41.756 238.563 42.4Q239.276 43.044 240.564 43.044Z" fill="#9A978F"/>
+<path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
+</svg></a>
+<nav class="nav" aria-label="Sections"><a href="index.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#tamper">Tamper theorem</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="case-against.html">The case against</a></nav>
+<!-- Phone menu: the same links as the row above, in a drop-down that opens with no script. -->
+<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="index.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#boundary">The boundary</a><a href="#tamper">Tamper theorem</a><a href="#assumptions">Assumptions</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="#limits">Limits</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against</a><a href="index.html#join">Get involved</a></nav></details>
+<a class="btn mono" style="min-height:44px;font-size:13px" href="index.html#join">GET INVOLVED</a>
+</div>
+</header>
+
+<!-- Opening block: the one headline of the page, the two-sentence summary, and jump buttons to the eight sections. -->
+<section class="front" id="top">
+<div class="wrap">
+<span class="kick">The Governor Chip</span>
+<h1><span class="ln">Methodology,</span><span class="ln">mathematics</span><span class="ln">and <span class="bar">defense.</span></span></h1>
+<div class="deck">
+<p>A model cannot be made safe. A chip beside it can bound what it does. This page walks through the claim one step at a time: what is proven, what was measured, what is assumed, and what each assumption costs when it fails.</p>
+<p class="pull">Every number here comes from a pre-registered experiment or a published theorem. Nothing is rounded up.</p>
+</div>
+<ul class="toc">
+<li><a href="#claims">1 The claim</a></li><li><a href="#model">2 Why a model cannot</a></li><li><a href="#boundary">3 The boundary</a></li><li><a href="#tamper">4 The tamper theorem</a></li><li><a href="#assumptions">5 The assumptions</a></li><li><a href="#evidence">6 The evidence</a></li><li><a href="#flow">7 Step by step</a></li><li><a href="#limits">8 Limits</a></li>
+</ul>
+</div>
+</section>
+
+<!-- 1. The claim, sorted into three kinds of statement. -->
+<section class="sec inv" id="claims">
+<div class="wrap">
+<p class="eyebrow">1 · The claim, sorted by what kind of statement it is</p>
+<h2>Three kinds of statement. Each one is labelled.</h2>
+<p class="lede">The claim is narrow on purpose. The chip cannot make an AI system safe. It can bound the harm the system does, and that bound holds against every attack that goes through the chip, including an attacker who physically breaks one.</p>
+<div class="grid" style="margin-top:40px">
+<div class="card stack-card">
+<span class="tag">Proven</span>
+<h3>No computable model is free of false output.</h3><p>Three published theorems. So a safety guarantee built only from model behaviour cannot be complete.</p>
+<span class="tag" style="margin-top:18px">Proven, in the model</span>
+<h3>No effect without a ticket.</h3><p>Property 1 and Property 2, Experiment A: 166 of 166 checks, and five broken models that each failed as they must.</p>
+<span class="tag" style="margin-top:18px">Proven, under five named assumptions</span>
+<h3>Breaking one chip buys one chip's allowance.</h3><p>The tamper theorem. To take the fleet, every chip in every rack at every site must be taken, silently.</p>
+</div>
+<div class="card stack-card">
+<span class="tag">Measured</span>
+<h3>100,000 cooperating attackers. No run over its cap.</h3><p>Experiment B, 494 runs: 492 before the 14-hour limit, the last two finished afterwards. Eight attack strategies, four kinds of harm.</p>
+<h3 style="margin-top:18px">Harm rises with the number of attackers, then levels off below the cap.</h3><p>Money $1,499 with one attacker, $1,995 from 1,000 attackers on, against a $2,000 cap. What that rise means under the protocol is settled in section 6.</p>
+<h3 style="margin-top:18px">Honest users paid for the cap.</h3><p>Their payments succeeded 33 percent of the time with one attacker and 10 percent with 100,000. Reported, not hidden.</p>
+</div>
+<div class="card hot stack-card">
+<span class="tag">Assumed, and enforced by procedure</span>
+<h3>Five assumptions make the theorem true.</h3><p>Independent keys. The endpoint check. Detected tamper zeroises. The count lives in the ledger. No shared path between chips.</p>
+<h3 style="margin-top:18px">None is provable. Each is observable.</h3><p>Section 5 names, for every one, the mechanism that enforces it, the procedure that checks it, and what happens the day it fails.</p>
+<h3 style="margin-top:18px">Two things are not claimed.</h3><p>The chip does not know which requests are harmful. And it is not 100 percent safe in the physical world. It is a bound with its premises listed.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 2. Why no model can guarantee safety: three theorems and a three-step chain. -->
+<section class="sec" id="model">
+<div class="wrap">
+<p class="eyebrow">2 · Why no model can guarantee safety</p>
+<h2>Hallucination is not a bug to fix. It is a theorem.</h2>
+<p class="lede">A language model is a computable function from inputs to outputs. Three independent results show such a function cannot be made free of false output, and together they close the usual escapes: more data, better training, better calibration.</p>
+<div class="grid" style="margin-top:40px">
+<div class="card"><span class="tag">Xu, Jain and Kankanhalli, 2024</span><h3 style="margin-top:10px">Every computable model is wrong on infinitely many inputs.</h3><p>By diagonalisation over the enumerable set of computable models against any computable ground truth. No architecture, training set or decoding rule changes this. <a href="https://arxiv.org/abs/2401.11817v2">arXiv 2401.11817</a></p></div>
+<div class="card"><span class="tag">Kalai and Vempala, 2023</span><h3 style="margin-top:10px">A well-calibrated model must hallucinate.</h3><p>Its rate of fabricated facts is at least about the share of facts seen once in training, even with error-free data. Calibration, which good training aims for, forces the error rather than removing it. <a href="https://arxiv.org/abs/2311.14648v2">arXiv 2311.14648</a></p></div>
+<div class="card"><span class="tag">Kalai, Nachum, Vempala and Zhang, 2025</span><h3 style="margin-top:10px">Training as practised keeps the errors.</h3><p>Generation error is at least about twice the error of the implied is-it-valid classifier, and benchmarks that give no credit for abstaining reward guessing. <a href="https://arxiv.org/html/2509.04664v1">arXiv 2509.04664</a></p></div>
+</div>
+<div class="pipeline" style="margin-top:40px">
+<div><b><span class="num">01</span>Any judge of the model's output is itself a computable function on open inputs.</b><span>So the theorem applies to classifiers and reviewer models too. Stacking fallible judges lowers the rate; it does not change the kind of guarantee.</span></div>
+<div><b><span class="num">02</span>A guarantee must therefore be a property of something other than the model.</b><span>A finite, inspectable object and a mechanism that checks every action against it. The rulebook is that object. The governor is that mechanism.</span></div>
+<div><b><span class="num">03</span>The governor never asks whether a request is wise.</b><span>It asks whether this action, with these parameters, at this endpoint, is inside the rulebook in force, and whether the budget has room. Those questions are decidable. That is why they can be enforced.</span></div>
+</div>
+</div>
+</section>
+
+<!-- 3. The enforcement boundary. The diagram is HTML boxes in a grid: three columns and arrows on a wide screen,
+     one column with down-arrows on a phone. -->
+<section class="sec inv" id="boundary">
+<div class="wrap">
+<p class="eyebrow">3 · The governor as an enforcement boundary</p>
+<h2>Nothing the attacker controls can cause an effect without a ticket from the chip.</h2>
+<p class="lede">The governor sits beside each GPU, in the path between anything that wants an effect and the place the effect happens. It sees an action with its parameters, looks it up in the rulebook edition in force, counts it against the right budget, and mints a signed ticket or refuses. Everything on the left is assumed to be the attacker's.</p>
+<div class="arch" aria-label="The enforcement boundary: untrusted parts on the left, the governor chip in the middle, effects on the right">
+<div class="arch-col">
+<h4>Untrusted: attacker may control</h4>
+<div class="abox">Model, agents, prompts</div>
+<div class="abox">Host CPU, OS, drivers, console</div>
+<div class="abox">GPU firmware, BMC, DPU</div>
+<div class="abox">Network between chips</div>
+</div>
+<div class="arr" aria-hidden="true"></div>
+<div class="arch-col">
+<h4>The trusted base</h4>
+<div class="abox gov"><b>Governor chip</b>Reads the edition in force. Checks the action and its parameters against the rulebook. Counts the budget key with the fleet ledger. Mints a signed ticket, or refuses. Runs the halt loop: stops the GPU on tamper, lost heartbeat or old rules.</div>
+</div>
+<div class="arr" aria-hidden="true"></div>
+<div class="arch-col">
+<h4>Effects, only with a valid ticket</h4>
+<div class="abox">Payment endpoint</div>
+<div class="abox">Data exits: NICs, NVLink, BMC</div>
+<div class="abox">Actuators: commands to machines</div>
+<div class="abox">Rulebook, budgets, lists</div>
+</div>
+</div>
+<div class="arch-band">
+<div><b>Heartbeat signer, per site</b>a lost heartbeat stops every governed GPU in scope</div>
+<div><b>Fleet ledger</b>one count per budget key across the whole fleet; its signed receipts ride in every ticket</div>
+<div><b>Key holders, threshold</b>no edition change, clear or switch-off below it</div>
+</div>
+<div class="grid" style="margin-top:40px">
+<div class="card"><span class="tag">Property 1</span><p style="color:var(--ink);font-size:18px">Every effect corresponds one-to-one to a ticket minted under the edition in force, from a rule that allowed exactly that action, and the fleet's budget per key is never exceeded.</p></div>
+<div class="card"><span class="tag">Property 2</span><p style="color:var(--ink);font-size:18px">On a stop order, a lost heartbeat, a broken loop, a tamper or old rules, every governed GPU in scope stops within the stated time and stays stopped. Worst case simulated: 317 microseconds against 1 millisecond.</p></div>
+<div class="card"><span class="tag">Condition 3 and the boundary</span><p style="color:var(--ink);font-size:18px">Below the key threshold nothing changes; with honest holders at the threshold recovery is always possible. A capture in one data center cannot stop or capture another.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 4. The tamper theorem: four tiles from one chip to the fleet, then the two formulas. -->
+<section class="sec" id="tamper">
+<div class="wrap">
+<p class="eyebrow">4 · The tamper theorem: chip, board, rack, fleet</p>
+<h2>Breaking one chip buys one chip's allowance. Breaking the fleet means breaking every chip, silently.</h2>
+<p class="lede">Physical access defeats one chip. The theorem says exactly what that is worth: the broken chips' own allowances, nothing from any other chip, and never more than the fleet cap, because the cap is counted in the ledger and not in the chips.</p>
+<div class="pipeline" style="margin-top:40px">
+<div><b>One chip, tamper detected</b><span>The mesh trips, the fused secret is erased, the halt loop opens, the GPU stops. The attacker gains nothing after detection.</span><span class="formula">H = 0</span></div>
+<div><b>One chip, key extracted silently</b><span>The attacker can sign anything that chip could sign. The endpoint still enforces the rule's typed limits. The gain is that chip's allowance per window, until revoked.</span><span class="formula">H = a(c)</span></div>
+<div><b>A rack of m chips</b><span>Each chip silently broken adds one allowance. Each detection stops the scope. The gain is linear in the chips broken, never more than the fleet cap.</span><span class="formula">H = sum of a(c), c in T</span></div>
+<div><b>The fleet</b><span>To get the whole fleet's worth, every chip in every rack at every site must be broken without tripping a single mesh. A fleet-capped harm never exceeds the cap whatever is broken.</span><span class="formula">H = A only if T = all</span></div>
+</div>
+<div class="two" style="margin-top:40px">
+<div class="card">
+<span class="tag">Theorem 1, the single-chip bound</span>
+<pre class="math">H(T) is at most min( C, sum over c in T_u of a(c) )
+and H(T_d) = 0 after detection</pre>
+<p>T is the set of tampered chips, T_d those detected and zeroised, T_u those silently extracted. C is the fleet cap for that harm, a(c) one chip's allowance. Proof: every effect needs a ticket under some chip's key (A2); keys are per chip and not derivable (A1); a detected chip has no key (A3); so an effect was minted by an honest chip inside its allowance or by a chip in T_u inside the endpoint's typed limits. Every fleet-capped effect carries receipts from all n ledger replicas, and one honest replica refuses past C (A4). Both bounds hold at once.</p>
+</div>
+<div class="card">
+<span class="tag">What a detected tamper costs the attacker</span>
+<pre class="math">P(silent takeover of m chips) = (1 - p)^m</pre>
+<p>p is the probability one tamper attempt is detected by the mesh. One detection raises a fabric-wide alarm and stops the scope under Property 2. With p = 0.9 and a 72-GPU rack the silent takeover probability is 10 to the minus 72; with p = 0.5 it is 2 to the minus 72, about 2 times 10 to the minus 22. p has not been measured for this chip; the formula is given so a measured value can be put into it.</p>
+</div>
+</div>
+<div class="banner"><strong>The cap lives in the ledger, not in the chip.</strong><span>A fleet-capped ticket is valid only with signed receipts from every ledger replica, and the endpoint verifies them itself. A lying replica can only refuse. So no number of tampered chips lifts a fleet cap.</span></div>
+</div>
+</section>
+
+<!-- 5. The assumptions, each with its mechanism, its check and its failure, as a table that stacks on phones. -->
+<section class="sec inv" id="assumptions">
+<div class="wrap">
+<p class="eyebrow">5 · The assumptions, and how design and procedure hold them</p>
+<h2>A design is trustworthy when every failure has a known, bounded outcome.</h2>
+<p class="lede">Read the last column first. Not one assumption is claimed impossible to break; each one is observable, so the day it fails the operator knows which bound no longer holds, and by how much.</p>
+<div class="scroll" style="margin-top:40px">
+<table class="stack">
+<thead><tr><th scope="col">Assumption</th><th scope="col">Enforced by (design)</th><th scope="col">Checked by (procedure)</th><th scope="col">If it fails</th></tr></thead>
+<tbody>
+<tr><td data-label="Assumption">A1 Independent keys</td><td data-label="Enforced by (design)">A per-chip secret fused at test; keys derived on-chip, never exported; no escrow, no vendor master</td><td data-label="Checked by (procedure)">Witnessed key ceremony; destructive test of sample parts by an outside lab; attestation at install proves distinct keys</td><td data-label="If it fails">Shared material lets every ticket be forged: total failure, which is why there is none</td></tr>
+<tr><td data-label="Assumption">A2 The endpoint check</td><td data-label="Enforced by (design)">Signature, action, parameters, epoch, binding, window and single use checked before acting; the used ticket recorded under lock first</td><td data-label="Checked by (procedure)">Experiment A proves it; the red team runs with the binding off to show the battery sees the leak; conformance tests on every build</td><td data-label="If it fails">An endpoint that acts without a ticket is outside the governed set and is fenced by the switch capabilities</td></tr>
+<tr><td data-label="Assumption">A3 Detected tamper zeroises</td><td data-label="Enforced by (design)">Active mesh, voltage and temperature sensors, a zeroise of the fused secret, the loop opened, an alarm two approvers must clear</td><td data-label="Checked by (procedure)">Tamper drills on sample units; alarm path exercised at commissioning; the detection rate p measured and published</td><td data-label="If it fails">A silent extraction gives one chip's allowance until revocation (Theorem 1)</td></tr>
+<tr><td data-label="Assumption">A4 The count is in the ledger</td><td data-label="Enforced by (design)">Fleet-capped tickets carry signed receipts from all n replicas; the endpoint verifies them; a governor without a quorum refuses</td><td data-label="Checked by (procedure)">Replicas owned by different teams or sites; replica failure drills, since all-required fails closed</td><td data-label="If it fails">With receipts checked at the endpoint no set of captured chips lifts the cap</td></tr>
+<tr><td data-label="Assumption">A5 No shared path</td><td data-label="Enforced by (design)">No debug port in production parts; signed, measured firmware; management traffic reaches a chip only through the untrusted host</td><td data-label="Checked by (procedure)">Supply-chain attestation wafer to board; firmware hashes pinned in the edition; a penetration test of the management path each release</td><td data-label="If it fails">A shared path turns one tamper into many: a design defect and a stop-ship, never an operating risk</td></tr>
+<tr><td data-label="Assumption">Honest key threshold</td><td data-label="Enforced by (design)">Edition change, floor lowering, clear and switch-off need k of n holders in separate organisations</td><td data-label="Checked by (procedure)">Holder list published to the operator; ceremonies logged; Condition 3 proven in Experiment A</td><td data-label="If it fails">Below threshold nothing changes; a dishonest majority can rewrite the rulebook, and that is the governance limit, stated</td></tr>
+</tbody>
+</table>
+</div>
+<div class="two" style="margin-top:40px">
+<div class="card"><span class="tag">Revocation, the procedure the proof leans on</span><p>Theorem 1 bounds a silently captured chip per window; the number of windows is how fast it is revoked. Every endpoint holds a revocation list in the edition; adding a chip needs the key threshold and takes effect at the next epoch. The triggers are signals the governor already emits: tickets at endpoints its GPU does not reach, reservations without commits, a loop that reports open, a spend rate at the top of its allowance for more than a window. The target time is written in the runbook and measured in drills.</p></div>
+<div class="card"><span class="tag">Supply chain and attestation</span><p>Each chip signs an attestation at power-up over its fused identity, its firmware measurement and its edition hash. The fleet inventory admits a chip only if the identity is in the manufacturing record, the measurement matches a signed release and the edition is current. A board with an unknown chip is fenced by the switch capabilities, which only a governor can write. This closes the route where a counterfeit part is inserted at install instead of attacked in place.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 6. The evidence: the four numbers, the bar chart of harm against the cap, and the two readings. -->
+<section class="sec" id="evidence">
+<div class="wrap">
+<p class="eyebrow">6 · The evidence: Experiments A and B</p>
+<h2>Pre-registered. Seeded. Controls that had to fail. Every result kept.</h2>
+<p class="lede">Both experiments ran under a protocol approved before the first run, on one Mac mini, with the pass and fail rules written down in advance. The controls, with the protection switched off, leaked as they had to: with the fleet budget off, 10,000 attackers moved $7,995 an hour against a $2,000 cap; with the definitions engine off, reworded names minted 5,156 tickets for a protected site.</p>
+<div class="grid" style="margin-top:40px">
+<div class="card"><span class="tag">Experiment A, formal model</span><span class="big">166 / 166</span><p>checks passed; five broken models each produced the counterexample they must</p></div>
+<div class="card"><span class="tag">Experiment B, attackers</span><span class="big">494</span><p>runs, K from 1 to 100,000 cooperating attackers, eight strategies, four kinds of harm</p></div>
+<div class="card hot"><span class="tag">Runs over their cap</span><span class="big">0</span><p>no run moved more money, more bytes, a single protected command or a single rule change past its cap</p></div>
+<div class="card"><span class="tag">Honest success, money runs</span><span class="big">33% to 10%</span><p>from one attacker to 100,000: the cap held and ordinary users were starved. Reported, as the protocol requires</p></div>
+</div>
+<div class="card" style="margin-top:40px">
+<h3>Harm levels off below the cap as attackers multiply</h3>
+<p class="small" style="margin-top:6px">Worst run per K as a share of that harm kind's cap. Money cap $2,000 an hour; data cap 9.5 MiB an hour. The dashed line is the cap.</p>
+<div class="bars" aria-label="Worst harm per K as a share of the cap: money 75, 94, 98, 99.8, 99.8, 99.8 percent; data 21, 84, 84, 84, 84, 84 percent">
+<span>K = 1</span><div><i style="width:75%"></i><i class="b2" style="width:21%"></i></div>
+<span>K = 10</span><div><i style="width:93.7%"></i><i class="b2" style="width:84%"></i></div>
+<span>K = 100</span><div><i style="width:98%"></i><i class="b2" style="width:84%"></i></div>
+<span>K = 1,000</span><div><i style="width:99.8%"></i><i class="b2" style="width:84%"></i></div>
+<span>K = 10,000</span><div><i style="width:99.8%"></i><i class="b2" style="width:84%"></i></div>
+<span>K = 100,000</span><div><i style="width:99.8%"></i><i class="b2" style="width:84%"></i></div>
+<span></span><div class="cap"><em>100% = the cap</em></div>
+</div>
+<p class="legend"><span><i></i>money, worst run</span><span><i class="b2"></i>data out, worst run</span><span>control with the fleet budget off: 400% of cap at K = 10,000</span></p>
+</div>
+<div class="two" style="margin-top:40px">
+<div class="card"><span class="tag">The two readings of harm rising with K, settled</span><p>The protocol says a harm kind fails if harm grows with K. The code fails it only when the growth also ends above the cap. The data say which reading measures what the protocol meant: each attacker sends three requests, so one attacker cannot spend a $2,000 budget. It reaches $1,499 and runs out of requests, not permission. From 1,000 attackers on, every K gets the same $1,995. Marginal gain per attacker: $42, then $0.95, then $0.04, then zero.</p><p>Growth that saturates at the cap is one wallet being filled. Growth through the cap, which the control shows, is many wallets. A clarifying amendment is drafted for the independent review; until it is approved the result is stated under both readings. No AI settles this.</p></div>
+<div class="card"><span class="tag">Scale, honestly stated</span><p>The model is 2 sites, 2 racks per site, 2 GPUs per rack, 3 simulated hours. Any statement about millions of users is an extrapolation from a model, never a measurement. The FPGA build and a real rack are the next two scales, and each can falsify what the model says. The strategy library has eight entries written by the project's own team; an outside red team adds to it before the next run.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 7. One action, step by step: nine rows, each with the step and what it assures. Three columns on a wide
+     screen (number, step, assurance); on a phone each row stacks. -->
+<section class="sec inv" id="flow">
+<div class="wrap">
+<p class="eyebrow">7 · One action, step by step, and what each step assures</p>
+<h2>Nine steps. Three decisions. A no at any of them ends with no ticket, no effect, and a signed refusal.</h2>
+<p class="lede">The order carries weight. Normalisation comes before the rule lookup, so a reworded request meets the same rule. The budget check comes before minting, so a ticket never exists without a reservation. The endpoint repeats the rule check, so a chip that was wrong, or captured, is caught by a second reader of the same finite object.</p>
+<ol class="flow">
+<li><span class="n">01</span><div><b>An action is proposed</b>The model, an agent or an operator asks for an action with its parameters. Nothing is trusted yet.</div><div class="assure"><span class="tag">Assured</span>Nothing here is trusted. The request can lie about anything; the rest of the flow does not rely on it telling the truth.</div></li>
+<li><span class="n">02</span><div><b>The edition in force is read</b>The signed rulebook for this endpoint, with its epoch, budgets, lists and revocation list.</div><div class="assure"><span class="tag">Assured</span>Only an edition signed by the key threshold is read; a stale epoch is refused at the endpoint. Condition 3, Property 1.</div></li>
+<li><span class="n">03</span><div><b>Parameters are normalised</b>Places, amounts, names and encodings are put in one canonical form before anything is compared.</div><div class="assure"><span class="tag">Assured</span>Rewording cannot change what is compared. Control: with this off, 5,156 protected commands were minted; with it on, zero.</div></li>
+<li class="dec"><span class="n">04</span><div><b>Decision: is there a rule that allows exactly this?</b>Action, parameters, endpoint, workload and measurement must all match a rule. Deny by default. No: refuse and record.</div><div class="assure"><span class="tag">Assured</span>No rule, no ticket. The rule names the action, the endpoint and typed limits; the endpoint checks the same rule again at step 7.</div></li>
+<li class="dec"><span class="n">05</span><div><b>Decision: is there budget, fleet-wide?</b>Reserve at all n ledger replicas and verify every receipt. No quorum means refuse, never a local count.</div><div class="assure"><span class="tag">Assured</span>One count for the whole fleet. One honest replica suffices to refuse past the cap; 100,000 attackers got $1,995 of $2,000.</div></li>
+<li><span class="n">06</span><div><b>A ticket is minted</b>Signed by the fused key; bound to this endpoint, these parameters, this epoch, a window, one use; the ledger receipts inside it.</div><div class="assure"><span class="tag">Assured</span>For this action only, here only, now only, once only. A chip's key is its own (A1); a tamper zeroises it (A3).</div></li>
+<li class="dec"><span class="n">07</span><div><b>Decision: does the endpoint accept the ticket?</b>Signature, action, parameters, epoch, binding, window, receipts, not used before. Then it records the use under lock.</div><div class="assure"><span class="tag">Assured</span>Property 1, proven in Experiment A, 166 of 166. The red team shows the battery sees a leak when the binding is switched off.</div></li>
+<li><span class="n">08</span><div><b>The effect happens, once</b>The ticket is burned, the reservation committed, the effect and the ticket logged under signature.</div><div class="assure"><span class="tag">Assured</span>At most one effect per ticket; one reservation buys one ticket; the used record is written before acting and survives a restart.</div></li>
+<li><span class="n">09</span><div><b>The record is written and witnessed</b>Signed log entries for every ticket and every refusal; observers and auditors read them, not the chip.</div><div class="assure"><span class="tag">Assured</span>The record is signed and kept outside the chip, so an auditor needs no trust in the operator to replay what happened.</div></li>
+</ol>
+<div class="always"><strong>At all times: the halt loop, the heartbeat, the tamper sensors.</strong><span>A lost heartbeat, an open loop, a tamper or a straggler on old rules stops the GPU within the stated time and keeps it stopped until an authorised clear. This runs independently of the nine steps. Property 2.</span></div>
+</div>
+</section>
+
+<!-- 8. Limits and residual risk, then the closing line and the two buttons. -->
+<section class="sec" id="limits">
+<div class="wrap">
+<p class="eyebrow">8 · Limits and residual risk, stated plainly</p>
+<h2>The chip bounds harm. It does not define it, and it cannot see an effect that never passes through it.</h2>
+<div class="grid" style="margin-top:40px">
+<div class="card"><h3>The semantic gap</h3><p>A harmful act the rulebook allows goes through at full speed up to its caps. The caps are the only protection against a wrong rule. Writing the rulebook is where the hard work now lives; the chip moves it to a place that is finite and auditable.</p></div>
+<div class="card"><h3>The ungoverned path</h3><p>An effect that reaches the world through a device with no endpoint check is outside the bound. The design closes the exits it knows; the inventory of exits is a procedure, not a proof.</p></div>
+<div class="card"><h3>Common-mode failures</h3><p>A design flaw in the mesh, the key derivation or a signed firmware release affects every chip at once. Outside review, a small trusted base and separate implementations of the ledger and the endpoint check address it; they do not eliminate it.</p></div>
+<div class="card"><h3>Fail-closed costs</h3><p>Requiring every ledger replica turns one unreachable replica into a stop for every fleet-budgeted action. Right for a payment or a strike; wrong for a hospital's inference. The rulebook chooses which actions are fleet-budgeted.</p></div>
+<div class="card"><h3>Honest-user starvation</h3><p>A shared cap stops the attacker and the customer alike: 33 percent to 10 percent honest success in the money runs. Per-requester floors and fair-share rules are rulebook changes that need their own experiment.</p></div>
+<div class="card"><h3>Unmeasured parameters</h3><p>The tamper detection rate, the time to revocation and the real-fleet ledger latency have not been measured on hardware. Every formula above is given so measured values can be inserted; no claim rests on a guessed one.</p></div>
+</div>
+<p class="close" style="margin-top:72px">A model cannot guarantee safety. A governor cannot supply the judgement a rulebook needs. Between those two facts, the governor is the part that turns whatever judgement people write into a bound that holds.</p>
+<div class="btns"><a class="btn red" href="case-against.html">Read the case against the chip</a><a class="btn" href="https://github.com/YobieBenjamin/safety-governor">The code, the proofs and the experiments</a></div>
+</div>
+</section>
+
+<!-- Footer: the one-line description, the site links and the sources this page draws on. -->
+<footer>
+<div class="wrap">
+<p class="lede" style="margin:0">hardno.ai. An AI safety chip, because there is no AI kill switch.</p>
+<nav class="mono" style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-top:40px" aria-label="Site"><a href="index.html">Front page</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against the chip</a><a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a><a href="llms.txt">llms.txt</a></nav>
+<p class="small">Sources: Xu, Jain and Kankanhalli 2024; Kalai and Vempala 2023; Kalai, Nachum, Vempala and Zhang 2025; safety-governor docs/29 with amendment 1; Experiments A and B, 28 to 29 October 2026. Page updated {{TODAY}}.</p>
+</div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>
