@@ -40,10 +40,10 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 img,svg{max-width:100%;height:auto}            /* a picture or drawing is never wider than the screen it is on */
 body{overflow-wrap:break-word}                 /* a long web address or file name breaks across lines instead of pushing the page sideways */
 .small,.mono,code,.formbox dd{overflow-wrap:anywhere}   /* the machine-printout text (addresses, record fields) breaks wherever it must on a narrow phone */
-.wrap{padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right))}  /* on a phone held sideways, keep text clear of the notch and the rounded corners */
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--ink)}a:hover{color:var(--accent-ink)}
 .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}   /* the centered content column; 16px side margin on phones */
+.wrap{padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right))}  /* written after the rule above on purpose: on a phone held sideways, keep text clear of the notch and the rounded corners */
 
 /* ---- Type helpers and headings */
 .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
@@ -76,20 +76,21 @@ h3{font-size:26px;font-weight:600;line-height:1.15}
 header.top{border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.12em;font-size:14px}  /* the logo link, top left */
-.nav{display:flex;gap:28px;font-family:'IBM Plex Mono',monospace;font-size:13px}
+.nav{display:flex;gap:22px;font-family:'IBM Plex Mono',monospace;font-size:13px;white-space:nowrap}   /* one line, always; below 1100px the Menu button takes over */
 .nav a{text-decoration:none;color:var(--muted)}
 /* ---- The phone menu. On a wide screen the section links sit in a row (.nav) and the menu button is hidden.
    Under 820px the row hides and a Menu button (a native <details> box, so it opens and closes with no script)
    drops the same links down as a list, each 48px tall so a thumb can hit it. Same links, same order, on every
    screen size. */
 .menu{display:none;position:relative;font-family:'IBM Plex Mono',monospace;font-size:13px}
-.menu summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line2);color:var(--ink);letter-spacing:.1em;text-transform:uppercase;font-weight:600;font-size:12px}
+.menu summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line2);color:var(--ink);letter-spacing:.1em;text-transform:uppercase;font-weight:600;font-size:12px;font-family:'IBM Plex Mono',monospace}
 .menu summary::-webkit-details-marker{display:none}   /* no triangle: the word Menu is the control */
 .menu[open] summary{border-color:var(--accent);color:var(--accent-ink)}
-.menu-list{position:absolute;right:0;top:calc(100% + 8px);min-width:260px;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line2);z-index:20;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.menu-list{position:absolute;right:0;top:calc(100% + 8px);min-width:260px;max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px);overflow-y:auto;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line2);z-index:20;box-shadow:0 12px 32px rgba(0,0,0,.5)}   /* taller than the screen: the list scrolls inside its box */
 .menu-list a{display:flex;align-items:center;min-height:48px;padding:0 18px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line)}
 .menu-list a:last-child{border-bottom:0}
-@media (max-width:820px){.nav{display:none}.menu{display:block}header.top .wrap{gap:12px}header.top .btn{display:none}}   /* on phones: the Menu button replaces the row of links; the Get involved button moves into the menu */
+@media (max-width:1100px){.nav{display:none}.menu{display:block}header.top .btn{display:none}}   /* narrower than 1100px: the Menu button replaces the row of links; the Get involved button moves into the menu */
+@media (max-width:820px){header.top .wrap{gap:12px}}
 
 /* ---- Tables (the comparison of defenses) and verdict badges */
 table{width:100%;border-collapse:collapse;font-size:16px}
@@ -127,8 +128,8 @@ tr.chip td{background:var(--hot);color:var(--ink);border-top:2px solid var(--acc
 }
 
 /* ---- FAQ: native <details> boxes open and close with no script at all */
-details{border-bottom:1px solid var(--line2);padding:22px 0}
-summary{cursor:pointer;font-family:'IBM Plex Sans Condensed',sans-serif;font-size:24px;font-weight:600;min-height:44px}
+details:not(.menu){border-bottom:1px solid var(--line2);padding:22px 0}   /* the FAQ boxes; the phone menu is a details box too and is styled on its own */
+details:not(.menu) summary{cursor:pointer;font-family:'IBM Plex Sans Condensed',sans-serif;font-size:24px;font-weight:600;min-height:44px}
 details p{color:var(--muted);max-width:70ch}
 
 /* ---- Status list (where the research stands) */
@@ -157,7 +158,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px}   /* every 
 html.js .mottos li{display:none;margin:0}
 html.js .mottos li.on{display:block;animation:fade .8s ease both}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-@media (prefers-reduced-motion:reduce){html.js .mottos li{display:block;margin:6px 0;animation:none}html.js .mottos button{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}html.js .mottos li{display:block;margin:6px 0;animation:none}html.js .mottos button{display:none}}
 
 /* ---- The use-cases page (case files: one sector per section) */
 .kick{display:block;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 20px}  /* the small label above each case headline */
