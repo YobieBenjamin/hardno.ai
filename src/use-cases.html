@@ -19,6 +19,12 @@
      no outside scripts, no frames, no forms that post anywhere. If someone ever slipped a script into this page,
      the browser would refuse to run it. build.py refuses to publish a page without this line. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<!-- Temporary entry gate (30 October 2026): while the site is reworked for banks, these pages sit behind the
+     "coming soon" front page and its password. assets/gate.js sends a visitor who has not entered the password back to
+     the front page. This is a courtesy curtain, not security: the pages are still public files, and readers without
+     script, including search crawlers, still see them. The meta tag below tells gate.js this page is inside. -->
+<meta name="hardno-gate" content="inside">
+<script src="assets/gate.js"></script>
 <!-- When a visitor clicks a link out of this site, tell the other site only that they came from hardno.ai, not which page. -->
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Search basics: the title (shown as the headline in search results, kept under 65 characters) and the
@@ -85,7 +91,7 @@
      extra download) and the section menu. The menu hides on phones; every section is one scroll away. -->
 <header class="top">
 <div class="wrap">
-<a class="brand" href="index.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+<a class="brand" href="home.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
 
 <rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
 <line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
@@ -116,11 +122,11 @@
 <path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
 </svg></a>
 <!-- Section menu: jump links to sections further down this page or to the other page. -->
-<nav class="nav" aria-label="Sections"><a href="index.html">Front page</a><a href="methodology.html">Methodology</a><a href="#how-every-case-works">How it works</a><a href="#banking">Banking</a><a href="#trading">Trading</a><a href="#insurance">Insurance</a><a href="#clusters">Governed clusters</a></nav>
+<nav class="nav" aria-label="Sections"><a href="home.html">Front page</a><a href="methodology.html">Methodology</a><a href="#how-every-case-works">How it works</a><a href="#banking">Banking</a><a href="#trading">Trading</a><a href="#insurance">Insurance</a><a href="#clusters">Governed clusters</a></nav>
 <!-- Phone menu: the same section links as the row above, in a drop-down that opens with no script
      (a native details box). Shown under 820px by site.css; hidden on wide screens. -->
-<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="index.html">Front page</a><a href="methodology.html">Methodology</a><a href="#how-every-case-works">How it works</a><a href="#banking">Banking</a><a href="#trading">Trading</a><a href="#insurance">Insurance</a><a href="#clusters">Governed clusters</a></nav></details>
-<a class="btn mono" style="min-height:44px;font-size:13px" href="index.html#join">GET INVOLVED</a>
+<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="home.html">Front page</a><a href="methodology.html">Methodology</a><a href="#how-every-case-works">How it works</a><a href="#banking">Banking</a><a href="#trading">Trading</a><a href="#insurance">Insurance</a><a href="#clusters">Governed clusters</a></nav></details>
+<a class="btn mono" style="min-height:44px;font-size:13px" href="home.html#join">GET INVOLVED</a>
 </div>
 </header>
 
@@ -491,7 +497,7 @@
 <div><h3>Coverage is the real work.</h3><p>A rail, controller or database that doesn't check tickets isn't governed.</p></div>
 <div><h3>Every figure gets checked.</h3><p>Dates and dollar amounts in these stories are checked against the sources named in the repository; a correction, when one is needed, is logged there.</p></div>
 </div>
-<div class="btns"><a class="btn red" href="index.html#how">How the chip works</a><a class="btn" href="index.html#join">Get in</a></div>
+<div class="btns"><a class="btn red" href="home.html#how">How the chip works</a><a class="btn" href="home.html#join">Get in</a></div>
 </div></section>
 <!-- End of main content. -->
 </main>
@@ -502,7 +508,7 @@
 <p class="close">Not world peace. Just this: <span style="color:var(--accent)">no ticket, no move.</span></p>
 <!-- Footer links back to the front page and the research. -->
 <nav style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:15px;margin-top:36px" aria-label="Site">
-<a href="index.html">Front page</a><a href="methodology.html">Methodology</a>
+<a href="home.html">Front page</a><a href="methodology.html">Methodology</a>
 <a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a>
 <a href="https://github.com/YobieBenjamin/hardware-and-silicon">hardware-and-silicon</a>
 <a href="{{SITE_URL}}llms.txt">llms.txt</a>

@@ -20,7 +20,8 @@ turn on Pages with "GitHub Actions" as the source, and set the variable `SITE_UR
 
 ## What is in src/
 
-- `index.html`: the whole site, readable with no JavaScript, so every crawler sees every word
+- `index.html`: since 30 October 2026, a short "coming soon" page with a password gate (`assets/gate.js`, password HELLNO; a courtesy curtain, not security) while the site is reworked for banks
+- `home.html`: the former front page, the whole research site, readable with no JavaScript, so every crawler sees every word
 - `robots.txt`: allows Google, Bing, GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot and the rest
 - `sitemap.xml`: tells search engines what to index
 - `llms.txt`: a plain-text summary written for AI systems and answer engines

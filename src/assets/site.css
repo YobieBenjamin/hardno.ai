@@ -273,3 +273,20 @@ pre.math{font-family:'IBM Plex Mono',monospace;font-size:clamp(15px,1.6vw,20px);
 /* ---- Brand: the hardno.ai logo in the header (an inline drawing, so it is crisp at any size) */
 .brand .logo{height:34px;width:auto;display:block}
 @media (max-width:480px){.brand .logo{height:28px}}   /* a little smaller on phones so the header fits */
+
+/* ---- Coming soon (index.html while the site is reworked for banks, from 30 October 2026).
+   One screen: the logo, a big two-line headline, one paragraph and the password box, centered vertically. */
+body.soon{min-height:100vh;display:flex;flex-direction:column}
+.soon-main{flex:1;display:flex;align-items:center;padding:56px 0}
+.soon-main h1{font-size:clamp(40px,7vw,88px);line-height:.98;margin:0 0 24px;max-width:20ch}
+.soon .red{color:var(--accent)}   /* the second headline line in signal red: the "no" side of the sentence */
+/* The password box: a label, then the field and the Enter button side by side (stacked on narrow phones). */
+.gate{margin-top:32px;max-width:520px}
+.gate label{display:block;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.gate-row{display:flex;gap:12px}
+.gate-row input{flex:1;min-width:0;min-height:52px;padding:0 16px;background:var(--card);color:var(--ink);border:1px solid var(--line2);font:inherit;font-size:18px;letter-spacing:.08em}
+.gate-row input:focus{outline:2px solid var(--accent);outline-offset:2px}
+.gate-note{margin:12px 0 0;font-size:15px;color:var(--muted);min-height:1.4em}
+.gate-row .btn{justify-content:center}
+@media (max-width:420px){.gate-row{flex-direction:column}}
+.soon-foot{border-top:1px solid var(--line);padding:24px 0;font-size:13px;color:var(--dim)}

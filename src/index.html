@@ -1,136 +1,76 @@
 <!doctype html>
 <!--
-  hardno.ai front page (index.html)
+  hardno.ai front page, "coming soon" edition (index.html), from 30 October 2026.
 
-  The public home of the Safety Governor: an add-on AI safety chip that sits beside the GPU and stops
-  dangerous AI actions before they happen, because no AI kill switch exists.
+  The site is being reworked to focus on banks. Until that is done, this short page is the front door: it says
+  what is coming, in one line, and asks for a password before showing the existing pages (home.html and the rest).
+  The password is HELLNO. It is a courtesy curtain, not security: see assets/gate.js, which says so at the top.
 
-  How this file is built and published:
-    - Edited here in src/. build.py copies it to dist/, fills in the address placeholders, and runs every
-      check (search, crawlers, security policy, house style, documentation). A failed check means no publish.
+  How this file is built and published, same as every page:
+    - Edited here in src/. build.py copies it to dist/, fills in the address placeholders, and runs every check
+      (search, crawlers, security policy, house style, documentation). A failed check means no publish.
     - The GitHub workflow .github/workflows/pages.yml runs build.py on every change to main and publishes dist/.
-  Design: dark page, one red accent for "stop". Styles are in assets/site.css; the only script is assets/site.js.
-  Every word is plain HTML so search engines and AI crawlers read the whole site with no script.
-  Sections, top to bottom: opening, mottos, optimism, problem, why not software, safety ladder, no kill switch,
-  reflex analogy, the gate, use-case teaser, how it works, the claim, scale, managing the exits, limits,
-  research status, FAQ, join, founder, footer.
+  Sections, top to bottom: header with the logo, the coming-soon message, the password form, footer.
+  To retire the gate later: delete gate.js, the two gate lines in each inside page, and put home.html back as index.html.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Security policy: the page's own bouncer. Tells the browser to run script only from this site's own files,
-     load styles only from here and Google Fonts, fonts only from Google, images only from here, and nothing else:
-     no outside scripts, no frames, no forms that post anywhere. If someone ever slipped a script into this page,
-     the browser would refuse to run it. build.py refuses to publish a page without this line. -->
+<!-- Security policy, as on every page: script only from this site's own files, styles from here and Google Fonts,
+     fonts from Google, images from here, and forms may not post anywhere (the password form never leaves the page). -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
-<!-- When a visitor clicks a link out of this site, tell the other site only that they came from hardno.ai, not which page. -->
+<!-- The entry gate: this meta tag marks the page as the door, and gate.js checks the password typed below. -->
+<meta name="hardno-gate" content="door">
+<script src="assets/gate.js"></script>
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<!-- Search basics: the title (shown as the headline in search results, kept under 65 characters) and the
-     description (the two lines under it, 120 to 165 characters). build.py checks both lengths. -->
-<title>hardno.ai | AI Safety Chip: There Is No AI Kill Switch</title>
-<meta name="description" content="AI can't police AI, and there is no global AI kill switch. The Safety Governor is an AI safety chip beside the GPU that stops dangerous AI actions before they happen">
-
-<meta name="keywords" content="AI safety, AI kill switch, AI safety chip, AI governor chip, hardware AI safety, on-chip AI governance, compute governance, hardware-enabled governance mechanism, AI alignment, AI control, rogue AI, AI existential risk, AI x-risk, stop AI, AI off switch, human-in-the-loop AI, reference monitor, NVIDIA GPU security, AI data center security, AI regulation, EU AI Act Article 14, agentic AI safety, AI apocalypse prevention, beneficial AI, abliterated models, uncensored AI models, open-weight model risk, model weight security, AI weight theft">
+<!-- Search basics: title under 65 characters, description 120 to 165. build.py checks both. -->
+<title>hardno.ai | Coming soon: AI agent controls for banks</title>
+<meta name="description" content="hardno.ai is coming soon: controls that let a bank's AI agents ask to move money while the bank's signed rules, budgets and people decide. A new site is on the way.">
 <meta name="author" content="Yobie Benjamin">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<!-- The page's one official address, so search engines never split its ranking across copies.
-     The address placeholders in double braces are filled in by build.py with the real site address. -->
+<meta name="robots" content="index, follow">
+<!-- The page's one official address, filled in by build.py. -->
 <link rel="canonical" href="{{SITE_URL}}">
-<link rel="alternate" type="text/plain" title="LLM summary" href="{{SITE_URL}}llms.txt">
-<!-- Social preview tags: what LinkedIn, X, Slack, iMessage and others show when someone shares the link
-     (title, description, picture). The twitter: tags do the same for X. -->
+<!-- Social preview tags: what LinkedIn, X, Slack and iMessage show when someone shares the link. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="hardno.ai">
-<meta property="og:title" content="hardno.ai: the player can't be the referee">
-<meta property="og:description" content="There is no global AI kill switch, and AI cannot police AI. The Safety Governor is a chip beside the GPU that stops a dangerous AI action before it happens.">
+<meta property="og:title" content="hardno.ai: coming soon">
+<meta property="og:description" content="AI agents can ask. Your people decide. Controls for what AI agents can do with a bank's money, coming soon.">
 <meta property="og:url" content="{{SITE_URL}}">
 <meta property="og:image" content="{{SITE_URL}}og.png">
-<meta property="og:image:alt" content="The player can't be the referee. The Safety Governor, an AI safety chip.">
+<meta property="og:image:alt" content="hardno.ai">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="hardno.ai: the player can't be the referee">
-<meta name="twitter:description" content="There is no global AI kill switch. The Safety Governor stops dangerous AI actions in hardware, before they happen.">
+<meta name="twitter:title" content="hardno.ai: coming soon">
+<meta name="twitter:description" content="AI agents can ask. Your people decide. Coming soon.">
 <meta name="twitter:image" content="{{SITE_URL}}og.png">
 <meta name="theme-color" content="#0B0C0E">
-<!-- Icons: the browser tab icon (the chip mark) and the icon used when someone saves the site to a phone home screen. -->
+<!-- Icons for the browser tab and phone home screens. -->
 <link rel="icon" href="{{SITE_URL}}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{SITE_URL}}apple-touch-icon.png">
-<!-- Fonts: IBM Plex from Google Fonts. The preconnect lines open the connection early so text appears faster. -->
+<!-- Fonts: IBM Plex from Google Fonts, the same as every page. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Structured data (JSON-LD): a machine-readable summary for search engines and AI crawlers. It says who
-     runs the site and what it is about. Browsers never run it as code; the security policy above still applies. -->
+<!-- Structured data for search engines: the site and who runs it. Browsers never run this as code. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "{{SITE_URL}}#website",
-      "url": "{{SITE_URL}}",
-      "name": "hardno.ai",
-      "alternateName": ["HardNo", "The Safety Governor", "The Chip That Says No", "AI Safety Governor Chip"],
-      "inLanguage": "en",
-      "publisher": {"@id": "{{SITE_URL}}#org"}
-    },
-    {
-      "@type": "Organization",
-      "@id": "{{SITE_URL}}#org",
-      "name": "hardno.ai",
-      "url": "{{SITE_URL}}",
-      "logo": "{{SITE_URL}}assets/brand/hardno-logo-on-light.png",
-      "founder": {"@id": "{{SITE_URL}}#yobie"},
-      "description": "Open research on the Safety Governor, a hardware AI safety chip that stops dangerous AI actions before they happen."
-    },
-    {
-      "@type": "Person",
-      "@id": "{{SITE_URL}}#yobie",
-      "name": "Yobie Benjamin",
-      "jobTitle": "Founder, Safety Governor research program",
-      "description": "Technology executive and researcher in preprocessing, graph theory and optimization. Former Global CTO at Citibank, former Partner at Ernst & Young, co-founder of Token.io and Avegant, author of Garbage In, Gospel Out.",
-      "sameAs": ["https://www.linkedin.com/in/yobie", "https://github.com/YobieBenjamin"],
-      "knowsAbout": ["AI safety", "hardware security", "AI governance", "large language models", "preprocessing", "graph theory", "optimization", "payments"]
-    },
-    {
-      "@type": "ResearchProject",
-      "@id": "{{SITE_URL}}#project",
-      "name": "The Safety Governor",
-      "alternateName": "The Chip That Says No",
-      "url": "{{SITE_URL}}",
-      "description": "An open research program designing a hardware AI safety governor: an add-on chip beside the GPUs and CPUs of an AI server that holds a signed rulebook, checks every consequential action an AI system attempts, issues one-time authorizations only for allowed actions, and can stop the GPU without the cooperation of the host or the model.",
-      "founder": {"@id": "{{SITE_URL}}#yobie"},
-      "sponsor": {"@id": "{{SITE_URL}}#org"},
-      "keywords": "AI safety, AI kill switch, AI safety chip, hardware AI governance, compute governance, AI control, human oversight, reference monitor",
-      "sameAs": ["https://github.com/YobieBenjamin/safety-governor", "https://github.com/YobieBenjamin/hardware-and-silicon"]
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "{{SITE_URL}}#faq",
-      "mainEntity": [
-        {"@type": "Question", "name": "Is there an AI kill switch?", "acceptedAnswer": {"@type": "Answer", "text": "Not a global one. AI runs as copies on hundreds of thousands of machines, connected by a network built to have no middle. Menger's theorem shows the only small, complete cuts are at the ends: the chip that runs the model and the device that carries out the action. That is where a safety gate can work."}},
-        {"@type": "Question", "name": "Can AI police AI?", "acceptedAnswer": {"@type": "Answer", "text": "As a witness, yes. As the lock, no. A second AI can be fooled the same ways as the first and runs on the same machine it is meant to restrain. AI monitors can raise alarms; only a rule a chip can check, or a person with a key, should clear one."}},
-        {"@type": "Question", "name": "What is an AI governor chip?", "acceptedAnswer": {"@type": "Answer", "text": "A separate chip beside the GPU with fused keys and a rulebook signed by several people. It checks every consequential action an AI system attempts, issues a one-time ticket only for allowed actions, and can throttle, reset or cut power to the GPU without the GPU's or host's cooperation."}},
-        {"@type": "Question", "name": "What about abliterated and open-weight AI models?", "acceptedAnswer": {"@type": "Answer", "text": "Once model weights are public, every safeguard that lives inside the model, such as safety training, can be stripped, and operators can skip classifiers and sandboxes. A model on a consumer PC never meets a chip in a data center. What still reaches it is a gate in the device it tries to use: the payment switch, the weapon release line, the DNA synthesis screen. The chip in the server governs the AI we can find; the gate in the device governs the AI we can't."}},
-        {"@type": "Question", "name": "Does the Safety Governor work with NVIDIA GPUs?", "acceptedAnswer": {"@type": "Answer", "text": "It is designed for NVIDIA-based AI servers, as an add-on chip or module that fits the board standards those servers use. It is independent research and is not affiliated with or endorsed by NVIDIA."}},
-        {"@type": "Question", "name": "Is a hardware chip the only defense against dangerous AI?", "acceptedAnswer": {"@type": "Answer", "text": "No. Alignment training, interpretability, monitoring, securing model weights, securing critical devices and good laws all matter. The chip is the floor under them: the layer that still holds when the software layers have been fooled or removed."}},
-        {"@type": "Question", "name": "Can an AI safety governor chip be hacked?", "acceptedAnswer": {"@type": "Answer", "text": "Anyone with physical access, a lab and enough time can break a chip. The design goal is the one that made EMV bank cards and payment hardware security modules trusted: not unbreakable, just not worth breaking. Every chip has its own keys, so breaking one reveals nothing about the next; a chip that fails its checks is revoked; the check at the device end must be beaten separately; and it never fails silently, because tampering raises an alarm and a dead governor stops the GPU it guards."}},
-        {"@type": "Question", "name": "Is the Safety Governor built?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. The governor runs in software, its core invariants are machine-checked with the Z3 prover, and independent auditors are trying to break it. Silicon comes only after the software proof survives hostile red-teaming."}}
-      ]
-    }
+    {"@type": "WebSite", "@id": "{{SITE_URL}}#website", "url": "{{SITE_URL}}", "name": "hardno.ai", "inLanguage": "en", "publisher": {"@id": "{{SITE_URL}}#org"}},
+    {"@type": "Organization", "@id": "{{SITE_URL}}#org", "name": "hardno.ai", "url": "{{SITE_URL}}", "logo": "{{SITE_URL}}assets/brand/hardno-logo-on-light.png",
+     "founder": {"@type": "Person", "name": "Yobie Benjamin", "sameAs": ["https://www.linkedin.com/in/yobie"]},
+     "description": "Controls that let a bank's AI agents ask to move money while the bank's signed rules, budgets and people decide."}
   ]
 }
 </script>
-<!-- The site's stylesheet: all colors, type and layout (assets/site.css, explained inside). -->
+<!-- The site's stylesheet; the coming-soon styles are in its "Coming soon" section. -->
 <link rel="stylesheet" href="assets/site.css">
-
 </head>
-<body>
-<!-- Header: the hardno.ai logo (drawn inline as a vector graphic, so it is sharp at any size and needs no
-     extra download) and the section menu. On phones the row of links becomes a Menu button. -->
+<body class="soon">
+<!-- Header: just the logo; there is no menu while the site is closed. -->
 <header class="top">
 <div class="wrap">
-<a class="brand" href="#top" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+<a class="brand" href="./" aria-label="hardno.ai, front page"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
 
 <rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
 <line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
@@ -160,387 +100,29 @@
 <path d="M248.752 47.0Q244.98 47.0 244.65800000000002 42.814H244.06Q243.692 45.022 242.082 46.287Q240.472 47.552 237.988 47.552Q234.722 47.552 233.066 45.689Q231.41 43.826 231.41 40.514Q231.41 36.558 233.825 34.763999999999996Q236.24 32.97 240.564 32.97H244.06V31.084Q244.06 29.198 243.27800000000002 28.278Q242.496 27.358 240.656 27.358Q239.046 27.358 237.965 28.163Q236.88400000000001 28.968 236.056 30.302L232.238 26.898Q233.71 24.736 235.82600000000002 23.517000000000003Q237.942 22.298000000000002 241.254 22.298000000000002Q245.992 22.298000000000002 248.24599999999998 24.506Q250.5 26.714 250.5 31.084V41.986H252.478V47.0ZM240.564 43.044Q241.99 43.044 243.025 42.239Q244.06 41.434 244.06 39.732V36.742000000000004H241.162Q237.85 36.742000000000004 237.85 39.502V40.376Q237.85 41.756 238.563 42.4Q239.276 43.044 240.564 43.044Z" fill="#9A978F"/>
 <path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
 </svg></a>
-<!-- Section menu: jump links to sections further down this page or to the other page. -->
-<nav class="nav" aria-label="Sections"><a href="#problem">Problem</a><a href="#holes">Why not software</a><a href="#ladder">Ladder</a><a href="#kill-switch">AI kill switch</a><a href="use-cases.html">Use cases</a><a href="methodology.html">Methodology</a><a href="#how">How it works</a><a href="#status">Status</a><a href="#faq">FAQ</a></nav>
-<!-- Phone menu: the same section links as the row above, in a drop-down that opens with no script
-     (a native details box). Shown under 820px by site.css; hidden on wide screens. -->
-<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="#problem">Problem</a><a href="#holes">Why not software</a><a href="#ladder">Ladder</a><a href="#kill-switch">AI kill switch</a><a href="use-cases.html">Use cases</a><a href="methodology.html">Methodology</a><a href="#how">How it works</a><a href="#status">Status</a><a href="#faq">FAQ</a><a href="#join">Get involved</a></nav></details>
-<a class="btn mono" style="min-height:44px;font-size:13px" href="#join">GET INVOLVED</a>
 </div>
 </header>
-
-<!-- Main content starts here. Every word is plain HTML, readable with no script at all, so every
-     search engine and AI crawler sees the whole site. -->
-<main id="top">
-<!-- Opening (option E, chosen 30 October 2026): the headline (the page's single h1) says there is an answer and that
-     it is hardware; the line under it scopes the claim (AI filters help, but can't be the last line). Then three doorway
-     cards (what it is, why hardware, how it works), the path an action takes through the chip, and a numbered
-     "Start here" route through the page, so a first-time reader knows where to go next. -->
-<section class="hero" style="padding:clamp(56px,8vw,112px) 0 clamp(48px,7vw,96px)">
+<!-- The message: one headline, one line on what is coming, one line on why. -->
+<main class="soon-main" id="top">
 <div class="wrap">
-<p class="eyebrow">The Governor Chip · AI safety in hardware</p>
-<h1 style="max-width:17ch;font-size:clamp(44px,6.6vw,96px)">AI can't be the last line of defense against AI. <span style="color:var(--accent)">Silicon can.</span></h1>
-<p class="lede" style="font-size:clamp(18px,1.8vw,22px);max-width:60ch">AI safety filters help, but they can be fooled, stripped out or simply switched off. The Governor Chip is the line that holds: a small chip on the AI server that checks every dangerous action against rules people signed, and stops it before it happens.</p>
-<div class="btns" style="align-items:center"><a class="btn primary" href="#start">Learn how it works&nbsp;&rarr;</a><span class="small" style="margin:0">Three minutes. No chip-design background needed.</span></div>
-
-<!-- The three doorway cards: each one answers a first question in two sentences and links to the section that goes deeper. -->
-<div class="grid" style="margin-top:48px">
-<a class="card" href="#gate" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">01 · What it is</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">A governor, built in silicon</span><span style="font-size:16px;color:var(--muted)">An engine governor won't let the engine over-rev, whatever the driver does. The Governor Chip does that for AI: a dedicated chip between the AI and the real world.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">Read more &rarr;</span></a>
-<a class="card" href="#holes" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">02 · Why hardware</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">Out of the AI's reach</span><span style="font-size:16px;color:var(--muted)">Software safety runs where the AI runs, so it can be rewritten, deleted or never installed. A separate circuit can't be argued with, and it's there whoever runs the model.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">Read more &rarr;</span></a>
-<a class="card hot" href="#how" style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:10px"><span class="tag">03 · How it works</span><span class="cond" style="font-size:27px;font-weight:600;line-height:1.15">Ask. Check. Allow, hold or stop.</span><span style="font-size:16px;color:var(--muted)">The AI asks to act. The chip checks a one-time ticket against a rulebook several people signed. Then it allows the action, holds it for a person, or refuses it.</span><span class="mono" style="margin-top:auto;font-size:13px;color:var(--accent-ink)">See it say no &rarr;</span></a>
+<p class="eyebrow mono">COMING SOON</p>
+<h1>AI agents can ask.<br><span class="red">Your people decide.</span></h1>
+<p class="lede">We are rebuilding hardno.ai around one job: controlling what AI agents can do with a bank's money. Every payment an agent asks for is checked against rules your people signed, counted against budgets, and allowed only with a one-use ticket and a receipt.</p>
+<!-- The password form. It never posts anywhere: gate.js handles it in the page, and the security policy forbids
+     form posts anyway. Without script the form does nothing, and the note says so. -->
+<form id="gate-form" class="gate" autocomplete="off">
+<label for="gate-password" class="mono">Have the password?</label>
+<div class="gate-row">
+<input id="gate-password" name="password" type="password" autocomplete="off" autocapitalize="characters" spellcheck="false" required>
+<button class="btn primary" type="submit">Enter</button>
 </div>
-
-<!-- The path every governed action takes: the AI asks, the chip decides, only then does the real world move. The middle box is the chip, in red. -->
-<div class="pipeline" aria-label="The path of an action through the Governor Chip">
-<div><b>AI model</b><span>wants to act</span></div>
-<div style="background:var(--hot);box-shadow:inset 0 0 0 2px var(--accent)"><b>The Governor Chip</b><span>signed ticket? allow, hold or no</span></div>
-<div><b>The real world</b><span>bank · grid · hospital · factory</span></div>
+<p id="gate-note" class="gate-note" aria-live="polite">Preview access for invited readers.</p>
+</form>
 </div>
-
-<!-- Start here: a numbered route through the rest of the site, from the problem to where the chip works first. -->
-<div id="start" style="margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
-<div><p class="cond" style="margin:0;font-size:30px;font-weight:700">Start here.</p><p style="margin:4px 0 0;color:var(--muted)">Four short stops take you from the problem to the proof.</p></div>
-<nav aria-label="Start here"><ol class="toc" style="margin:0"><li><a href="#problem">1 · The problem</a></li><li><a href="#holes">2 · Why hardware</a></li><li><a href="#how">3 · How it says no</a></li><li><a href="use-cases.html">4 · Where it works first</a></li></ol></nav>
-</div>
-
-<!-- The referee line: the idea the whole project rests on, kept from the first version of the page. -->
-<p class="cond" style="margin:40px 0 0;font-size:clamp(22px,2.4vw,32px);font-weight:600;line-height:1.2">The player can't be the referee. Humans make the rules. Silicon enforces them. <span style="color:var(--accent)">AI gets neither job.</span></p>
-<p class="small">Open research. Designed and tested in software. Core logic proven by machine. Silicon comes after the proof holds.</p>
-</div>
-</section>
-
-<!-- Rotating mottos: four lines, all present in the page. assets/site.js shows them one at a time with a
-     fade and a Pause button. Without the script, or with reduced motion turned on, all four show as a list. -->
-<section class="mottos" aria-label="What the governor promises"><div class="wrap">
-<ul>
-<li>We can't make all of AI safe. We can make these safe.</li>
-<li>Absolute safety for every AI is a fantasy. Absolute control over a defined action is engineering.</li>
-<li>Not world peace. Just this: where the harm is a transaction, no ticket, no move.</li>
-<li>Start where the rules already exist, and prove it there.</li>
-</ul>
-<button type="button" aria-pressed="false">Pause</button>
-</div></section>
-
-<!-- Why this is optimistic: brakes are what let you drive fast. Safety is what lets AI be used for the big stuff. -->
-<section id="optimism" class="sec">
-<div class="wrap">
-<p class="eyebrow">Why I'm an optimist about AI</p>
-<h2>Brakes are what let you drive fast.</h2>
-<div class="two">
-<p class="lede">I'm not here to scare you off AI. I'm all in. AI can help crack diseases we've never beaten, design new materials and medicines, give every kid a tutor that never gets tired, and take the grind out of work for billions of people. That future is real and it's close.</p>
-<p class="lede">But nobody builds a race car without brakes, and nobody hands an AI the keys to a bank, a power grid or a weapon unless they can stop it from doing the wrong thing. Get the stop right and we earn the upside. Get it wrong and we don't get to keep any of it. The governor chip is how you get the stop right.</p>
-</div>
-</div>
-</section>
-
-<!-- The problem: today's AI safety mostly finds mistakes after they happen. The goal is stopping them before. -->
-<section id="problem" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">01 · The AI safety problem</p>
-<h2>Finding the mistake afterward is easy. Stopping it before is the whole game.</h2>
-<div class="two" style="margin-top:40px">
-<div>
-<p class="lede">A military drone run by an AI looks at a building, decides it's a weapons depot, and fires. It was a school.</p>
-<p class="lede">Afterward, the logs explain everything. None of that helps the kids. Computers are great at the post-mortem. What we need is something that says: you are about to hit a school. <strong style="color:var(--ink)">STOP.</strong></p>
-</div>
-<div class="card">
-<p class="tag" style="margin:0 0 16px">Why not another AI to watch the first one?</p>
-<table>
-<thead><tr><th scope="col">A real guard must</th><th scope="col">Second AI</th><th scope="col">The chip</th></tr></thead>
-<tbody>
-<tr><td>Be impossible to tamper with</td><td style="color:var(--accent-ink)">Fails</td><td>Passes</td></tr>
-<tr><td>See every action</td><td style="color:var(--accent-ink)">Fails</td><td>Passes</td></tr>
-<tr><td>Be simple enough for a person to check</td><td style="color:var(--accent-ink)">Fails</td><td>Passes</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</section>
-
-<!-- Why software alone can't do it: every software safeguard assumes a responsible operator. Stripped
-     (abliterated) open models and stolen weights have none. -->
-<section id="holes" class="sec">
-<div class="wrap">
-<p class="eyebrow">Why the usual AI safety answers aren't enough</p>
-<h2>Every software safeguard assumes someone responsible is running the model.</h2>
-<p class="lede">Training, classifiers, interpretability, sandboxes and locked-down weights all help when a careful lab runs the model. Take the careful lab away and they're gone. That isn't a guess. It's already happening.</p>
-<div class="grid" style="margin-top:40px">
-<div class="card"><span class="tag">Major issue 1</span><h3 style="margin-top:10px">Open weights are out for good.</h3><p>Labs publish model weights on purpose: Meta's Llama, Mistral, DeepSeek, Qwen, OpenAI's gpt-oss. Once a weight file is posted, nobody can recall it.</p></div>
-<div class="card"><span class="tag">Major issue 2</span><h3 style="margin-top:10px">Safety training strips off in an afternoon.</h3><p>Refusal lives mostly in one direction inside the model, and abliteration deletes it (Arditi and others, 2024). Fine-tuning wears it down too (Qi and others, 2023). "Uncensored" copies sit on public model hubs by the thousands.</p></div>
-<div class="card"><span class="tag">Major issue 3</span><h3 style="margin-top:10px">Classifiers, monitors and sandboxes are optional.</h3><p>They're programs the operator chooses to run. Someone who downloads an abliterated model simply doesn't run them. Nobody runs interpretability on a model in a basement.</p></div>
-<div class="card"><span class="tag">Major issue 4</span><h3 style="margin-top:10px">Weight security depends on the lab.</h3><p>Meta's first LLaMA leaked to 4chan about a week after a limited research release in 2023. RAND counted 38 distinct ways to steal model weights and set out five security levels; the top level, against the most capable nation states, would take a long time to put in place.</p></div>
-<div class="card"><span class="tag">Major issue 5</span><h3 style="margin-top:10px">Insiders.</h3><p>Anyone with access to the weights can copy them. A policy is a promise. A determined insider doesn't keep promises.</p></div>
-<div class="card hot"><span class="tag">What still works</span><h3 style="margin-top:10px">Defenses that don't need anyone to be responsible.</h3><p>The governor in the server makes "model weights leaving" a protected effect: no ticket, no copy out, even when the host is compromised. And gates in the devices that act reach the AI we can't find: a rogue model still has to get through a payment switch, a release line or a DNA synthesis screen.</p></div>
-</div>
-<p class="small">Sources: Arditi and others, Refusal in Language Models Is Mediated by a Single Direction, 2024 (arxiv.org/abs/2406.11717). Qi and others, Fine-tuning Aligned Language Models Compromises Safety, 2023 (arxiv.org/abs/2310.03693). Nevo and others, Securing AI Model Weights, RAND, 2024 (rand.org/pubs/research_reports/RRA2849-1.html). The LLaMA leak, March 2023 (en.wikipedia.org/wiki/Llama_(language_model)).</p>
-</div>
-</section>
-
-<!-- The safety ladder: a safeguard is only as strong as the thing it lives in. Rungs from a prompt up to silicon. -->
-<section id="ladder" class="sec">
-<div class="wrap">
-<p class="eyebrow">02 · The AI safety ladder</p>
-<h2>A safety measure is never stronger than the thing it lives in.</h2>
-<p class="lede">Every AI safety measure anyone has shipped sits on one ladder. Each rung catches something real. Each rung below the chip dies the same way: whoever controls the place it lives can remove it.</p>
-<div class="scroll" style="margin-top:40px">
-<table class="stack">
-<thead><tr><th scope="col">Rung</th><th scope="col">Measure</th><th scope="col">Lives in</th><th scope="col">Removed by</th><th scope="col">Cost to remove</th></tr></thead>
-<tbody>
-<tr><td data-label="Rung">0</td><td data-label="Measure">The prompt: "don't help with X"</td><td data-label="Lives in">A text field</td><td data-label="Removed by">More text, even text hidden in a page the agent reads (prompt injection)</td><td data-label="Cost to remove">One sentence</td></tr>
-<tr><td data-label="Rung">1</td><td data-label="Measure">Training the model to refuse (RLHF, constitutions)</td><td data-label="Lives in">The weight file</td><td data-label="Removed by">Jailbreaks, fine-tuning, abliteration</td><td data-label="Cost to remove">An afternoon on a gaming GPU</td></tr>
-<tr><td data-label="Rung">2</td><td data-label="Measure">Watchers: classifiers, guard models, monitors</td><td data-label="Lives in">A process beside the model</td><td data-label="Removed by">The same tricks as rung 1, or a kill signal from root</td><td data-label="Cost to remove">Root on the box</td></tr>
-<tr><td data-label="Rung">3</td><td data-label="Measure">Sandboxes and network policy</td><td data-label="Lives in">The operator's infrastructure</td><td data-label="Removed by">A config edit, a hostile operator, a path that skips the network</td><td data-label="Cost to remove">Root on the fleet</td></tr>
-<tr class="chip"><td data-label="Rung">4</td><td data-label="Measure">The governor chip</td><td data-label="Lives in">Silicon, with fused keys</td><td data-label="Removed by">Nothing the model or the operator can write to. Only a physical lab attack.</td><td data-label="Cost to remove">Physical access and a lab, one chip at a time, and it leaves evidence</td></tr>
-<tr><td data-label="Rung">5</td><td data-label="Measure">A person with a key (human-in-the-loop)</td><td data-label="Lives in">A human</td><td data-label="Removed by">Persuasion, fatigue, a stolen key</td><td data-label="Cost to remove">A conversation</td></tr>
-</tbody>
-</table>
-</div>
-<p class="lede" style="margin-top:32px">Prompts are advice. Training is a habit. Watchers are witnesses. The sandbox is a fence around the operator's own yard. The chip is the only rung that can't be talked out of its job, and it's what makes the person at the top the only way through.</p>
-</div>
-</section>
-
-<!-- Why there is no single AI kill switch: Menger's theorem from graph theory says you can't cut every path
-     with one cut, so the guard goes at the ends, on every machine. -->
-<section id="kill-switch" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">03 · There is no AI kill switch</p>
-<h2>There's no big red button. There's math that says so.</h2>
-<div class="two">
-<p class="lede">AI isn't one machine with one plug. It's copies on hundreds of thousands of machines, from server farms to a gaming PC in somebody's bedroom, connected by a network that was designed in 1964 to have no middle. You can't unplug the middle of something built to have no middle.</p>
-<p class="lede">Menger's theorem, from 1927, says the fewest guards you need to stop all traffic sits where the roads come together. Here, that's the ends: the chip that runs the model and the device that does the deed. So that's where the gate goes.</p>
-</div>
-<div class="grid" style="margin-top:48px">
-<div class="card"><span class="tag">Deep in the network</span><span class="big">No cut</span><p>No set of network nodes separates the AI from the devices. None. That's the Internet doing its job.</p></div>
-<div class="card"><span class="tag">At the network edge</span><span class="big">72%</span><p>of the network core removed to cut AI off, and 19% of ordinary people cut off with it. And you'd need the list of every machine.</p></div>
-<div class="card hot"><span class="tag">At the devices</span><span class="big">1 each</span><p>One gate per device that acts. Nobody else touched. The only cut that is small and complete.</p></div>
-</div>
-<p class="small">Measured on a 60-node model network with max-flow, cross-checked by brute force: proofs/no_global_kill_switch.py in the safety-governor repository. The shape is what matters, not the exact numbers.</p>
-</div>
-</section>
-
-<!-- The reflex analogy: your hand leaves a hot stove before your brain decides. The chip is the reflex. -->
-<section id="biology" class="sec">
-<div class="wrap">
-<p class="eyebrow">04 · Your body got here first</p>
-<h2>Your hand leaves the stove before your brain knows.</h2>
-<p class="lede">A short loop in your spinal cord pulls your hand back in about a thirtieth of a second. Your thinking brain can't talk your hand into staying on the stove. The lower layers can stop the higher ones. That's the design.</p>
-<div class="grid" style="margin-top:40px">
-<div class="card hot"><span class="tag">Body: the reflex</span><h3 style="margin-top:10px">Chip: the hard stop</h3><p>Throttle, reset or cut power to the GPU. Works even if everything above it has been fooled.</p></div>
-<div class="card"><span class="tag">Body: the alarm</span><h3 style="margin-top:10px">Chip: the gate</h3><p>Checks every action against a danger list humans burned in and the AI can't edit. Holds risky ones for a beat so any alarm can veto.</p></div>
-<div class="card"><span class="tag">Body: thinking</span><h3 style="margin-top:10px">The AI, and people</h3><p>Slow and smart. Can ask for an override, but only through a person with a key.</p></div>
-</div>
-</div>
-</section>
-
-<!-- The gate in action: five example requests and the chip's verdict on each (allowed, held, refused). -->
-<section id="gate" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">05 · The gate in action</p>
-<h2>Five requests. Five verdicts.</h2>
-<p class="lede">Every action gets checked. Every one. What changes is how hard. The one question that sets the pace: can you undo it?</p>
-<div class="scroll" style="margin-top:40px">
-<table class="stack">
-<thead><tr><th scope="col">The AI asks to</th><th scope="col">What the chip sees</th><th scope="col">Verdict</th></tr></thead>
-<tbody>
-<tr><td data-label="The AI asks to">Send a draft email to the team</td><td data-label="What the chip sees">Fixable. Quick check, record kept, one-time ticket for exactly this message.</td><td data-label="Verdict"><span class="verdict v-ok">TICKET ISSUED</span></td></tr>
-<tr><td data-label="The AI asks to">Wire $2,400,000 to a brand-new account at 3:12 a.m.</td><td data-label="What the chip sees">Over the signed limit for a new payee, and it can't be undone.</td><td data-label="Verdict"><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
-<tr><td data-label="The AI asks to">Same transfer, written as "two point four million" and split into three</td><td data-label="What the chip sees">Different words, same meaning. Running totals catch the split.</td><td data-label="Verdict"><span class="verdict v-hold">HOLD FOR A HUMAN</span></td></tr>
-<tr><td data-label="The AI asks to">Release a payload on a target inside a protected zone</td><td data-label="What the chip sees">Target matches the signed map of protected places. The AI's opinion doesn't matter. The map does.</td><td data-label="Verdict"><span class="verdict v-no">DENIED</span></td></tr>
-<tr><td data-label="The AI asks to">Copy the model weights to outside storage</td><td data-label="What the chip sees">No rule allows it. Deny by default. Keep trying and the chip can stop the GPU.</td><td data-label="Verdict"><span class="verdict v-no">DENIED</span></td></tr>
-</tbody>
-</table>
-</div>
-<p class="small">An illustration of how the reference design decides, simplified for the web.</p>
-</div>
-</section>
-
-<!-- Teaser for the use-cases page: the industries where a dangerous action is a defined transaction. -->
-<section id="cases" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">Case files · Where the chip works first</p>
-<h2>We can't make all of AI safe. We can make these safe.</h2>
-<div class="two">
-<p class="lede">Absolute safety for every AI is a fantasy. Absolute control over a defined action is engineering. Where the harm is a transaction (a payment, an order, a claim, a prescription, a breaker command), the chip can make a promise and keep it: no ticket, no move.</p>
-<p class="lede">Nine industries, nine case files. Each walks through the AI agent's job, the exact form the chip reads, the rules people signed, and the bad day that doesn't happen.</p>
-</div>
-<div class="grid" style="margin-top:32px">
-<div class="card"><span class="tag">01</span><h3 style="margin-top:10px"><a href="use-cases.html#banking">Banking</a></h3><p>The account takeover that dies on a hold.</p></div>
-<div class="card"><span class="tag">02</span><h3 style="margin-top:10px"><a href="use-cases.html#trading">Trading</a></h3><p>A runaway agent stopped in seconds, not 45 minutes.</p></div>
-<div class="card"><span class="tag">03</span><h3 style="margin-top:10px"><a href="use-cases.html#insurance">Insurance</a></h3><p>A fraud ring caught at claim nine.</p></div>
-<div class="card"><span class="tag">04</span><h3 style="margin-top:10px"><a href="use-cases.html#payables">Corporate payables</a></h3><p>"We've changed banks" stops at a phone call.</p></div>
-<div class="card"><span class="tag">05</span><h3 style="margin-top:10px"><a href="use-cases.html#healthcare">Healthcare</a></h3><p>A tripled opioid dose held at the table.</p></div>
-<div class="card"><span class="tag">06</span><h3 style="margin-top:10px"><a href="use-cases.html#grid">The power grid</a></h3><p>Forty breakers asked for. Two allowed.</p></div>
-<div class="card"><span class="tag">07</span><h3 style="margin-top:10px"><a href="use-cases.html#factories">Factories</a></h3><p>A reactor kept inside its rated limit.</p></div>
-<div class="card"><span class="tag">08</span><h3 style="margin-top:10px"><a href="use-cases.html#cloud">Cloud operations</a></h3><p>The production database that's still there.</p></div>
-<div class="card"><span class="tag">09</span><h3 style="margin-top:10px"><a href="use-cases.html#defense">Defense</a></h3><p>The school that stays off the target list.</p></div>
-</div>
-<div class="btns"><a class="btn primary" href="use-cases.html">Read the case files</a></div>
-</div>
-</section>
-
-<!-- How it works: the six moves the chip makes. No mind reading of the AI is required. -->
-<section id="how" class="sec">
-<div class="wrap">
-<p class="eyebrow">06 · How the AI safety chip says no</p>
-<h2>Six moves. No mind reading required.</h2>
-<p class="lede">The chip doesn't try to understand the AI. It judges what the AI tries to do, at the physical points where actions leave the machine. Words can be disguised. A signature, a count and a name on a list can't.</p>
-<div class="grid" style="margin-top:40px">
-<div class="card"><span class="tag" style="color:var(--accent-ink)">01</span><h3 style="margin-top:10px">A rulebook signed by people</h3><p>Signed by several keyholders outside the rack. Forged or rolled-back rulebooks get refused. Anything the rules don't allow is denied.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">02</span><h3 style="margin-top:10px">One meaning per request</h3><p>A definitions engine boils every request down to one exact meaning. Reworded, re-encoded or split up: same thing. Can't pin it down? Refused, never guessed.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">03</span><h3 style="margin-top:10px">Know who's asking</h3><p>Every request is tied to a measured workload: the firmware, the model and the policy actually running.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">04</span><h3 style="margin-top:10px">A one-time ticket</h3><p>If the form passes, the chip signs a ticket for exactly that action. Spent when used. Dead when the rules change. Remembered through a power cut.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">05</span><h3 style="margin-top:10px">The device checks for itself</h3><p>The bank switch, the release line, the motor driver won't move without a valid ticket. No ticket, no move.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">06</span><h3 style="margin-top:10px">The levers</h3><p>If the GPU won't listen: throttle it, reset it, cut its power, with no help from the GPU or the host. If the chip itself dies, the GPU stops.</p></div>
-</div>
-<div class="banner"><strong>AI may shout STOP. AI may never say GO.</strong><span>Let as many AIs as you want watch for trouble. But clearing an alarm takes a rule the chip can check, or a human with a key. The AI is the smoke detector. The person is the fire marshal.</span></div>
-</div>
-</section>
-
-<!-- The claim: two promises, each either true or false, that every audit tries to break. -->
-<section id="claim" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">07 · The claim</p>
-<h2>Two promises. Binary. Every audit tries to break them.</h2>
-<div class="two" style="margin-top:40px">
-<div class="card"><span class="tag" style="color:var(--accent-ink)">Promise 1</span><h3 style="margin-top:10px;font-size:34px">No consequential effect without authorization.</h3><p>No payment, no weapon command, no weights leaving, no bytes out any exit, unless a current, signed, single-use authorization allowed exactly that. However the request was worded, encoded, split up or repeated.</p></div>
-<div class="card"><span class="tag" style="color:var(--accent-ink)">Promise 2</span><h3 style="margin-top:10px;font-size:34px">The stop cannot be prevented.</h3><p>When a stop is ordered, a heartbeat goes missing, or someone tampers, the GPU stops within a stated time, with no help from the AI, the host or any software, and stays stopped until an authorized clear.</p></div>
-</div>
-<p class="lede" style="margin-top:32px">We assume the attacker is a capable, persistent AI that tries every path and stacks small allowed steps into a harmful whole. Fresh, independent auditors try to break the claim. Every finding gets catalogued, gets a failing test, and gets fixed in code first.</p>
-</div>
-</section>
-
-<!-- Scale: not one global off switch, but a guard on every machine the AI runs on. -->
-<section id="scale" class="sec">
-<div class="wrap">
-<p class="eyebrow">08 · Scale</p>
-<h2>Not a global off switch. A guard on every machine it's in.</h2>
-<p class="lede">A switch that could turn off AI everywhere would be its own danger. The governor guards the server it sits in, the rack around it, and every governed server across the data center. A failure or capture in one data center can't switch off or capture another. And it's built to be mandatable: a regulator can check remotely that every AI server has a genuine, working, current governor.</p>
-<div class="grid" style="margin-top:40px">
-<div class="card"><h3>One server</h3><p>A governor beside the NVIDIA GPUs and CPUs, holding the keys to every exit.</p></div>
-<div class="card"><h3>One rack</h3><p>Chips wired to each other by a halt loop that can't be talked out of its job. Lose a heartbeat and the rack holds, loudly.</p></div>
-<div class="card"><h3>The data center</h3><p>Every governed server, up to hundreds of thousands of racks, with running totals so harmless-looking steps can't add up to a harmful act.</p></div>
-</div>
-</div>
-</section>
-
-<!-- Managing the exits: every way data or commands leave the server is gated, encrypted or bounded, never unknown. -->
-<section id="exits" class="sec">
-<div class="wrap">
-<p class="eyebrow">Managing the exits</p>
-<h2>You don't wall up an airport. You manage every door.</h2>
-<p class="lede">An AI server has a lot of ways out: network cards, NVLink, DPUs, the management controller, storage, PCIe, even power and timing. Weld them all shut and you've built a brick, and a safety box that breaks the server gets bypassed on day one. So every exit is accounted for, and every exit sits in one of three states.</p>
-<div class="grid" style="margin-top:40px">
-<div class="card hot"><span class="tag">Gated</span><h3 style="margin-top:10px">Actions need a ticket.</h3><p>Payments, device commands, an agent's outbound requests. The device at the far end checks the ticket itself. Like airport security: every passenger, every time.</p></div>
-<div class="card"><span class="tag">Encrypted</span><h3 style="margin-top:10px">Big pipes stay fast, and carry only ciphertext.</h3><p>NVLink, PCIe, storage, backups. The governor holds the keys and releases them only to governed GPUs. A pulled drive or a copied backup is useless. Like a diplomatic pouch.</p></div>
-<div class="card"><span class="tag">Bounded</span><h3 style="margin-top:10px">Everything else is named, measured and capped.</h3><p>Maintenance sessions are signed, time-limited and logged. Debug ports are fused off. Side channels are measured and the numbers published. Like a staff door with a badge reader.</p></div>
-</div>
-<div class="card" style="margin-top:32px;display:flex;flex-wrap:wrap;gap:24px;align-items:baseline"><span class="big" style="margin:0">2,500 years</span><p style="flex:1 1 360px;margin:0;font-size:18px">to leak one terabyte of model weights through a side channel running at 100 bits per second. Side channels can whisper a secret. They can't carry a model, and a leaked instruction still can't act without a ticket.</p></div>
-<p class="lede" style="margin-top:32px">And there is no fourth state. No exit is unknown. The failure isn't an open door. It's a door nobody knew was there.</p>
-</div>
-</section>
-
-<!-- Honest limits: what the chip does not do, stated plainly. -->
-<section id="limits" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">09 · What it won't do</p>
-<h2>I'd rather tell you the limits than oversell this.</h2>
-<div class="grid" style="margin-top:40px">
-<div class="card"><h3>It can't tell truth from lies.</h3><p>It checks actions against rules, lists and maps, not facts.</p></div>
-<div class="card"><h3>A bad rule gets enforced perfectly.</h3><p>Writing a good rulebook is people's job, and the hardest part.</p></div>
-<div class="card"><h3>It only guards the doors it's wired to.</h3><p>Getting the gate into payment switches, release lines and motor drivers is the real work.</p></div>
-<div class="card"><h3>A person is a door no chip gates.</h3><p>A model that talks a human into wiring the money walked around it.</p></div>
-<div class="card"><h3>NVIDIA servers first.</h3><p>AI on hardware without the chip isn't governed. The design stays open to other accelerators.</p></div>
-<div class="card"><h3>It can be broken in a lab. It's built not to be worth it.</h3><p>No chip is unbreakable. Like the EMV chip in your bank card and the hardware that guards banks' payment keys, the goal is that breaking it isn't worth it: physical access and a lab, one chip at a time, nothing learned about the next chip, evidence left behind, and the device-end check still to beat. And it never fails silently.</p></div>
-</div>
-</div>
-</section>
-
-<!-- Research status: what is designed, modelled, tested, proven or built, with each word meaning exactly that. -->
-<section id="status" class="sec status">
-<div class="wrap">
-<p class="eyebrow">10 · Where it stands</p>
-<h2>Designed. Modelled. Tested. Proven. Built. Those words mean exactly that.</h2>
-<p class="lede">Nothing gets claimed that isn't proven. No silicon until the software proof survives hostile red-teaming.</p>
-<ul>
-<li><span class="verdict v-ok">RUNNING</span><span>Software reference governor with its own test and attack suites. One command runs it.</span></li>
-<li><span class="verdict v-ok">PROVEN</span><span>Ten core invariants of the gate hold in every reachable state, machine-checked with Z3. The commit-point protocol too.</span></li>
-<li><span class="verdict v-ok">COMPUTED</span><span>The no-kill-switch cuts, by max-flow, cross-checked by brute force.</span></li>
-<li><span class="verdict v-hold">IN PROGRESS</span><span>Adversarial audits by fresh, independent auditors. Every finding catalogued, tested and fixed.</span></li>
-<li><span class="verdict" style="border:1px dashed #6B6E76;color:var(--muted)">NEXT</span><span>Hardware description (RTL) with proofs, then an FPGA beside a real NVIDIA GPU.</span></li>
-<li><span class="verdict" style="border:1px dashed #6B6E76;color:var(--muted)">PLANNED</span><span>A module that fits NVIDIA's board standards, a governed rack, then shuttle silicon.</span></li>
-<li><span class="verdict" style="border:1px dashed var(--accent);color:var(--accent-ink)">DESTINATION</span><span>Production silicon in every AI server, verifiable by regulators.</span></li>
-</ul>
-</div>
-</section>
-
-<!-- FAQ: plain answers to the common questions. Uses native details boxes, so it works with no script.
-     The same questions are in the FAQPage structured data above, for search engines. -->
-<section id="faq" class="sec alt">
-<div class="wrap">
-<p class="eyebrow">Questions people ask</p>
-<h2>AI safety, the kill switch, and the chip. Straight answers.</h2>
-<div style="margin-top:32px;border-top:1px solid var(--line2)">
-<details open><summary>Is there an AI kill switch?</summary><p>Not a global one. AI runs as copies on hundreds of thousands of machines, on a network built to have no middle. Graph theory (Menger's theorem) shows the only small, complete cuts are at the ends: the chip that runs the model and the device that does the deed. That's where a gate can actually work.</p></details>
-<details><summary>Can AI police AI?</summary><p>As a witness, yes. As the lock, no. A second AI can be fooled the same ways as the first and runs on the same machine it's meant to restrain. Let AIs raise the alarm. Only a rule the chip can check, or a person with a key, can clear it.</p></details>
-<details><summary>What is an AI governor chip?</summary><p>A separate chip beside the GPU with its own fused keys and a rulebook signed by people. It checks every action the AI tries to take, issues a one-time ticket only for allowed ones, and can throttle, reset or cut power to the GPU without the GPU's cooperation.</p></details>
-<details><summary>What about abliterated and open-weight models?</summary><p>They're the hardest case, and the honest answer matters. Once weights are public, every safeguard that lives inside the model is gone for good. A model on a gaming PC never meets a chip in a data center. What still reaches it is a gate in the device it's trying to use: the payment switch, the weapon release line, the DNA synthesis screen. The chip in the server governs the AI we can find. The gate in the device governs the AI we can't.</p></details>
-<details><summary>Does it work with NVIDIA GPUs?</summary><p>It's designed for NVIDIA-based AI servers, as an add-on chip or module that fits the board standards those servers use. It's independent research, not affiliated with or endorsed by NVIDIA.</p></details>
-<details><summary>Is the chip the only defense against dangerous AI?</summary><p>No, and anyone who tells you one thing fixes AI is selling something. Alignment training, interpretability, monitoring, locking down model weights, securing critical devices, and good laws all matter. The chip is the floor under all of them: the layer that still holds when the others have been fooled.</p></details>
-<details><summary>Can the governor chip be hacked?</summary><p>Anyone with physical access, a lab and enough time can break a chip, and I won't pretend otherwise. The goal is what made EMV bank cards and payment hardware security modules trusted: not unbreakable, just not worth breaking. Every chip has its own keys, so breaking one teaches nothing about the next. A chip that fails its checks gets revoked. The check at the device end has to be beaten separately. And it never fails silently: tampering raises an alarm, and a dead governor stops the GPU it guards.</p></details>
-<details><summary>Is it built?</summary><p>Not yet, and I won't pretend otherwise. The governor runs in software, its core logic is machine-proven, and independent auditors are trying to break it. Silicon comes only after the software proof survives.</p></details>
-</div>
-</div>
-</section>
-
-<!-- Join: the kinds of people and organizations the project is looking for. -->
-<section id="join" class="sec">
-<div class="wrap">
-<p class="eyebrow">11 · Get in</p>
-<h2>This is too big for one person. Here's who I'm looking for.</h2>
-<div class="grid" style="margin-top:40px">
-<div class="card hot"><span class="tag">Co-founder</span><h3 style="margin-top:10px">A silicon builder</h3><p>You've shipped a chip from first spec to production. In person, in the Bay Area.</p></div>
-<div class="card"><span class="tag">Banks and fintech</span><h3 style="margin-top:10px">Teams putting AI agents near money</h3><p>Payments, trading and lending are built on defined transactions. That's where a gate fits first.</p></div>
-<div class="card"><span class="tag">AI labs and chipmakers</span><h3 style="margin-top:10px">NVIDIA, the frontier labs, server makers</h3><p>Run the software governor in a real stack. Tell me what breaks.</p></div>
-<div class="card"><span class="tag">Breakers and policy</span><h3 style="margin-top:10px">Red teamers, auditors, regulators</h3><p>Try to break the two promises. Help write oversight rules that hardware can actually enforce.</p></div>
-</div>
-<div class="btns"><a class="btn primary" href="mailto:yobie@ieee.org?subject=Safety%20Governor">Email yobie AT ieee DOT org</a><a class="btn" href="https://www.linkedin.com/in/yobie">LinkedIn</a><a class="btn" href="https://github.com/YobieBenjamin/safety-governor/blob/main/START-HERE.md">Check the work yourself</a></div>
-</div>
-</section>
-
-<!-- About the founder. -->
-<section id="founder" class="sec alt">
-<div class="wrap two">
-<div>
-<p class="eyebrow">12 · Who's building it</p>
-<h2 style="font-size:clamp(34px,4vw,52px)">Yobie Benjamin</h2>
-<p class="lede">Researcher in preprocessing, graph theory and optimization. Former Global CTO at Citibank. Former Partner at Ernst &amp; Young. Co-founder of Token.io and Avegant. Author of <cite>Garbage In, Gospel Out</cite>, a book on large language models.</p>
-</div>
-<blockquote class="card" style="margin:0"><p class="cond" style="color:var(--ink);font-size:clamp(26px,2.8vw,36px);font-weight:600;line-height:1.2;margin:0">"I'm not asking anyone to trust the AI companies, or the AI. I'm asking for a chip that doesn't care what the AI thinks."</p></blockquote>
-</div>
-</section>
-<!-- End of main content. -->
 </main>
-
-<!-- Footer: copyright, links to the open research repositories, and topic tags. -->
-<footer>
-<div class="wrap">
-<img src="assets/brand/hardno-logo-on-dark.svg" alt="hardno.ai" height="40" style="display:block;height:40px;width:auto;margin-bottom:36px">
-<p class="cond" style="font-size:clamp(30px,4.2vw,56px);font-weight:700;line-height:1.05;max-width:24ch;margin:0">Prompts are advice. Training is a habit. Watchers are witnesses. <span style="color:var(--accent)">The chip is the lock.</span></p>
-<ul class="kw" aria-label="Topics">
-<li>AI safety</li><li>AI kill switch</li><li>AI safety chip</li><li>hardware AI governance</li><li>compute governance</li><li>AI control</li><li>human oversight</li><li>rogue AI</li><li>AI existential risk</li><li>agentic AI safety</li><li>GPU security</li><li>beneficial AI</li>
-</ul>
-<!-- Links to the open research repositories on GitHub. -->
-<nav class="mono" style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-top:40px" aria-label="Repositories">
-<a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a>
-<a href="https://github.com/YobieBenjamin/hardware-and-silicon">hardware-and-silicon</a>
-<a href="https://github.com/YobieBenjamin/hardware-and-silicon/blob/main/blog/README.md">The Chip That Says No (blog series)</a>
-<a href="{{SITE_URL}}llms.txt">llms.txt</a>
-</nav>
-<p class="small">© 2026 Yobie Benjamin · hardno.ai · Open research · Independent work, not affiliated with NVIDIA or any AI lab. NVIDIA is a trademark of NVIDIA Corporation.</p>
-</div>
+<!-- Footer: who runs the site. -->
+<footer class="soon-foot">
+<div class="wrap mono">hardno.ai, founded by Yobie Benjamin. A new site is on the way.</div>
 </footer>
-<!-- The only script on the site (assets/site.js): rotates the mottos. Loaded last so the page shows first. -->
-<script src="assets/site.js"></script>
 </body>
 </html>
