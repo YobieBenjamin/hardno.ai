@@ -20,6 +20,12 @@
 <!-- Security policy: the page's own bouncer. Script only from this site's own files, styles from here and Google
      Fonts, fonts from Google, images from here, nothing else. build.py refuses to publish a page without it. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<!-- Temporary entry gate (30 October 2026): while the site is reworked for banks, these pages sit behind the
+     "coming soon" front page and its password. assets/gate.js sends a visitor who has not entered the password back to
+     the front page. This is a courtesy curtain, not security: the pages are still public files, and readers without
+     script, including search crawlers, still see them. The meta tag below tells gate.js this page is inside. -->
+<meta name="hardno-gate" content="inside">
+<script src="assets/gate.js"></script>
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Search basics: title under 65 characters, description 120 to 165. build.py checks both. -->
 <title>hardno.ai | The Governor Chip: Methodology, Math and Defense</title>
@@ -78,7 +84,7 @@
 <!-- Header: the logo, the section links (a row on wide screens, a Menu button on phones) and the main button. -->
 <header class="top">
 <div class="wrap">
-<a class="brand" href="index.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
+<a class="brand" href="home.html" aria-label="hardno.ai, home"><svg class="logo" viewBox="0 0 270 64" height="34" role="img" aria-label="hardno.ai">
 
 <rect x="13.0" y="13.0" width="38.0" height="38.0" rx="4.0" fill="none" stroke="#ECE9E2" stroke-width="3.6"/>
 <line x1="20.0" y1="3.0" x2="20.0" y2="11.0" stroke="#ECE9E2" stroke-width="3.6" stroke-linecap="square"/>
@@ -108,10 +114,10 @@
 <path d="M248.752 47.0Q244.98 47.0 244.65800000000002 42.814H244.06Q243.692 45.022 242.082 46.287Q240.472 47.552 237.988 47.552Q234.722 47.552 233.066 45.689Q231.41 43.826 231.41 40.514Q231.41 36.558 233.825 34.763999999999996Q236.24 32.97 240.564 32.97H244.06V31.084Q244.06 29.198 243.27800000000002 28.278Q242.496 27.358 240.656 27.358Q239.046 27.358 237.965 28.163Q236.88400000000001 28.968 236.056 30.302L232.238 26.898Q233.71 24.736 235.82600000000002 23.517000000000003Q237.942 22.298000000000002 241.254 22.298000000000002Q245.992 22.298000000000002 248.24599999999998 24.506Q250.5 26.714 250.5 31.084V41.986H252.478V47.0ZM240.564 43.044Q241.99 43.044 243.025 42.239Q244.06 41.434 244.06 39.732V36.742000000000004H241.162Q237.85 36.742000000000004 237.85 39.502V40.376Q237.85 41.756 238.563 42.4Q239.276 43.044 240.564 43.044Z" fill="#9A978F"/>
 <path d="M259.792 19.906Q257.81399999999996 19.906 256.917 19.055Q256.02 18.204 256.02 16.732V15.719999999999999Q256.02 14.247999999999998 256.917 13.396999999999998Q257.81399999999996 12.546 259.792 12.546Q261.77 12.546 262.667 13.396999999999998Q263.56399999999996 14.247999999999998 263.56399999999996 15.719999999999999V16.732Q263.56399999999996 18.204 262.667 19.055Q261.77 19.906 259.792 19.906ZM256.572 22.85H263.012V47.0H256.572Z" fill="#9A978F"/>
 </svg></a>
-<nav class="nav" aria-label="Sections"><a href="index.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#tamper">Tamper theorem</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="case-against.html">The case against</a></nav>
+<nav class="nav" aria-label="Sections"><a href="home.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#tamper">Tamper theorem</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="case-against.html">The case against</a></nav>
 <!-- Phone menu: the same links as the row above, in a drop-down that opens with no script. -->
-<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="index.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#boundary">The boundary</a><a href="#tamper">Tamper theorem</a><a href="#assumptions">Assumptions</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="#limits">Limits</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against</a><a href="index.html#join">Get involved</a></nav></details>
-<a class="btn mono" style="min-height:44px;font-size:13px" href="index.html#join">GET INVOLVED</a>
+<details class="menu"><summary>Menu</summary><nav class="menu-list" aria-label="Sections, phone menu"><a href="home.html">Front page</a><a href="#claims">The claim</a><a href="#model">Why not a model</a><a href="#boundary">The boundary</a><a href="#tamper">Tamper theorem</a><a href="#assumptions">Assumptions</a><a href="#evidence">Evidence</a><a href="#flow">Step by step</a><a href="#limits">Limits</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against</a><a href="home.html#join">Get involved</a></nav></details>
+<a class="btn mono" style="min-height:44px;font-size:13px" href="home.html#join">GET INVOLVED</a>
 </div>
 </header>
 
@@ -354,7 +360,7 @@ and H(T_d) = 0 for anything minted after detection</pre>
 <footer>
 <div class="wrap">
 <p class="lede" style="margin:0">hardno.ai. An AI safety chip, because there is no AI kill switch.</p>
-<nav class="mono" style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-top:40px" aria-label="Site"><a href="index.html">Front page</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against the chip</a><a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a><a href="llms.txt">llms.txt</a></nav>
+<nav class="mono" style="display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;margin-top:40px" aria-label="Site"><a href="home.html">Front page</a><a href="use-cases.html">Use cases</a><a href="case-against.html">The case against the chip</a><a href="https://github.com/YobieBenjamin/safety-governor">safety-governor</a><a href="llms.txt">llms.txt</a></nav>
 <p class="small">Sources: Xu, Jain and Kankanhalli 2024; Kalai and Vempala 2023; Kalai, Nachum, Vempala and Zhang 2025; safety-governor docs/29 with amendment 1; Experiments A and B, 28 to 29 October 2026. Page updated {{TODAY}}.</p>
 </div>
 </footer>

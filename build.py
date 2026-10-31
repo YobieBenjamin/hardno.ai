@@ -59,7 +59,10 @@ TEXT_FILES = {".html", ".txt", ".xml", ".svg", ".css", ".js"}
 #   mention: phrases its visible text must contain (None means use MUST_MENTION)
 # The front page carries the site-wide structured data (who runs the site, the research project, the FAQ).
 PAGES = {
-    "index.html": {"path": "", "types": ("WebSite", "Person", "ResearchProject", "FAQPage"), "mention": None},
+    # From 30 October 2026 the front page is a short "coming soon" page with a password gate, while the site is
+    # reworked for banks; the former front page lives on as home.html and keeps the site-wide phrases and data.
+    "index.html": {"path": "", "types": ("WebSite", "Organization"), "mention": ["coming soon", "AI agents", "bank"]},
+    "home.html": {"path": "home.html", "types": ("WebSite", "Person", "ResearchProject", "FAQPage"), "mention": None},
     "use-cases.html": {"path": "use-cases.html", "types": ("Article", "BreadcrumbList"),
                        "mention": ["AI safety", "banking", "trading", "insurance", "healthcare", "power grid", "cloud", "governed", "no ticket, no move"]},
     "methodology.html": {"path": "methodology.html", "types": ("Article", "BreadcrumbList"),
@@ -72,11 +75,13 @@ PAGES = {
 # Key: file inside src/; value: the text that must start the file's explanatory comment.
 MUST_EXPLAIN = {
     "index.html": "<!--",
+    "home.html": "<!--",
     "use-cases.html": "<!--",
     "methodology.html": "<!--",
     "case-against.html": "<!--",
     "assets/site.css": "/*",
     "assets/site.js": "/*",
+    "assets/gate.js": "/*",
 }
 
 
